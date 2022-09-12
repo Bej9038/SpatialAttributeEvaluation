@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import * as THREE from 'three';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,39 +6,9 @@ import * as THREE from 'three';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  ngOnInit()
-  {
-    if(this.isWebGlAvailable())
-    {
-
-    }
-  }
-
-  isWebGlAvailable()
-  {
-    if (this.attemptWebGl()) {
-      return true;
-    } else {
-      //display error message
-      return false;
-    }
-  }
-
-  attemptWebGl()
-  {
-    try {
-
-      const canvas = document.createElement( 'canvas' );
-      return !! ( window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ) );
-
-    } catch ( e ) {
-
-      return false;
-
-    }
-  }
-
 }
+
+
+
 
 
