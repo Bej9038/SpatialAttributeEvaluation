@@ -1,29 +1,43 @@
 <body>
+  <mat-toolbar>
+    test
+  </mat-toolbar>
 
-  <mat-grid-list cols="2">
+  <mat-grid-list cols="2" rowHeight="85%">
     <mat-grid-tile>
       <view></view>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-list>
-        <mat-list-item>
+        <mat-list-item
+          matTooltip="{{stringStore.immersionAttributeDescription}}"
+          matTooltipPosition="after">
           <attribute-slider attributeName="Immersion"></attribute-slider>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item
+          matTooltip="{{stringStore.clarityAttributeDescription}}"
+          matTooltipPosition="after">
           <attribute-slider attributeName="Clarity"></attribute-slider>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item
+          matTooltip="{{stringStore.widthAttributeDescription}}"
+          matTooltipPosition="after">
           <attribute-slider attributeName="Width"></attribute-slider>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item
+          matTooltip="{{stringStore.depthAttributeDescription}}"
+          matTooltipPosition="after">
           <attribute-slider attributeName="Depth"></attribute-slider>
         </mat-list-item>
       </mat-list>
     </mat-grid-tile>
   </mat-grid-list>
 
+  <div>
+
+  </div>
 </body>

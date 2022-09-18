@@ -8,6 +8,8 @@ import { AttributeSlider } from "./Components/attribute-slider/attribute-slider.
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatListModule } from "@angular/material/list";
 import { ViewComponent } from './Components/view/view.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ViewComponent } from './Components/view/view.component';
     BrowserAnimationsModule,
     MatSliderModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatToolbarModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
