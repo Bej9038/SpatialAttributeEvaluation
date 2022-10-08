@@ -19,6 +19,7 @@ import { MatButtonModule} from "@angular/material/button";
 import { A11yModule} from '@angular/cdk/a11y';
 import { ResetWarning } from './Components/reset-warning/reset-warning.component';
 import {FormsModule} from "@angular/forms";
+import { Toolbar } from './Components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {FormsModule} from "@angular/forms";
     AttributeSlider,
     ViewComponent,
     WelcomeMenu,
-    ResetWarning
+    ResetWarning,
+    Toolbar
   ],
     imports: [
         BrowserModule,

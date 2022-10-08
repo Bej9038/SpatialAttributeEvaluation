@@ -10,15 +10,15 @@
 
   <mat-grid-tile class="form">
     <mat-form-field appearance="outline">
-      <input matInput >
+      <input matInput autocomplete="off">
       <mat-error *ngIf="this.invalidName">Please enter a valid name</mat-error>
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile class="button">
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Submit</button>
-    </div>
+    <mat-dialog-actions>
+      <button mat-stroked-button mat-dialog-close="formIsValid">Submit</button>
+    </mat-dialog-actions>
   </mat-grid-tile>
 
 </mat-grid-list>

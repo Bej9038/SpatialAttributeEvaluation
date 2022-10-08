@@ -1,6 +1,6 @@
-<h1>{{stringStore.endSessionWarning}}</h1>
+<h1 mat-dialog-title>{{stringStore.endSessionWarning}}</h1>
 
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close="formIsValid" isFocused (click)="resetSession()">Continue</button>
-  <button mat-button mat-dialog-close="formIsValid" >Cancel</button>
-</div>
+<mat-dialog-actions>
+  <button class="button" mat-stroked-button mat-dialog-close="formIsValid" (click)="resetSession()">Continue</button>
+  <button class="button" mat-stroked-button mat-dialog-close="formIsValid" >Cancel</button>
+</mat-dialog-actions>

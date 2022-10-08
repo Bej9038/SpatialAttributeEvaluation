@@ -1,0 +1,9 @@
+.mat-dialog-actions{
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.button {
+  padding: 0 40px 0 !important;
+}

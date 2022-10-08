@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {StringStoreService} from "./Services/string-store.service";
-import {MatDialog} from "@angular/material/dialog";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
-import {ResetWarning} from "./Components/reset-warning/reset-warning.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -18,18 +17,10 @@ export class AppComponent {
   ngOnInit() {
     this.dialog.open(WelcomeMenu,
       {
-        enterAnimationDuration: '.5s',
+        exitAnimationDuration: '.8s',
+        enterAnimationDuration: '.4s',
         width: '400px',
         height: '340px',
-        autoFocus: false
-      });
-  }
-
-  endSession()
-  {
-    let dialogRef = this.dialog.open(ResetWarning,
-      {
-        enterAnimationDuration: '.5s',
         autoFocus: false
       });
   }
