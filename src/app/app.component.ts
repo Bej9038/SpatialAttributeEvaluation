@@ -20,7 +20,7 @@ export class AppComponent {
       {
         enterAnimationDuration: '.5s',
         width: '400px',
-        height: '400px',
+        height: '340px',
         autoFocus: false
       });
   }

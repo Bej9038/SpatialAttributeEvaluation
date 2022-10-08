@@ -1,11 +1,24 @@
-<h1 mat-dialog-title>Welcome</h1>
-<p>Please Enter Your Name </p>
-<mat-form-field appearance="outline">
-  <mat-label>Name</mat-label>
-  <input matInput >
-  <mat-error *ngIf="this.invalidName">Please enter a valid name</mat-error>
-</mat-form-field>
+<mat-grid-list cols = 1 rowHeight="5:1">
 
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Ok</button>
-</div>
+  <mat-grid-tile>
+    <mat-card-title>Welcome</mat-card-title>
+  </mat-grid-tile>
+
+  <mat-grid-tile class="subtitle">
+    <mat-card-subtitle>Please Enter Your Name</mat-card-subtitle>
+  </mat-grid-tile>
+
+  <mat-grid-tile class="form">
+    <mat-form-field appearance="outline">
+      <input matInput >
+      <mat-error *ngIf="this.invalidName">Please enter a valid name</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile class="button">
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Submit</button>
+    </div>
+  </mat-grid-tile>
+
+</mat-grid-list>
