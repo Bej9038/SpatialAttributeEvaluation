@@ -2,41 +2,41 @@
   <toolbar class="toolbar"></toolbar>
 
   <div class="grid-container">
-    <mat-grid-list cols="2" rowHeight="10%">
+    <mat-grid-list cols="4" rowHeight="10%">
 
-      <mat-grid-tile rowspan="8">
+      <mat-grid-tile colspan="2" rowspan="8">
         <view></view>
       </mat-grid-tile>
 
-      <mat-grid-tile rowspan="8">
-        <mat-list>
-          <mat-list-item
-            matTooltip="{{stringStore.immersionAttributeDescription}}"
-            matTooltipPosition="after">
-            <attribute-slider attributeName="Immersion"></attribute-slider>
-          </mat-list-item>
+      <mat-grid-tile colspan="2" rowspan="8">
+          <mat-list>
+            <mat-list-item>
+              <attribute-slider attributeName="Immersion"
+                                matTooltip="{{stringStore.immersionAttributeDescription}}"
+                                matTooltipPosition="right"></attribute-slider>
+            </mat-list-item>
 
-          <mat-list-item
-            matTooltip="{{stringStore.clarityAttributeDescription}}"
-            matTooltipPosition="after">
-            <attribute-slider attributeName="Clarity"></attribute-slider>
-          </mat-list-item>
+            <mat-list-item>
+              <attribute-slider attributeName="Clarity"
+                                matTooltip="{{stringStore.clarityAttributeDescription}}"
+                                matTooltipPosition="right"></attribute-slider>
+            </mat-list-item>
 
-          <mat-list-item
-            matTooltip="{{stringStore.widthAttributeDescription}}"
-            matTooltipPosition="after">
-            <attribute-slider attributeName="Width"></attribute-slider>
-          </mat-list-item>
+            <mat-list-item>
+              <attribute-slider attributeName="Width"
+                                matTooltip="{{stringStore.widthAttributeDescription}}"
+                                matTooltipPosition="right"></attribute-slider>
+            </mat-list-item>
 
-          <mat-list-item
-            matTooltip="{{stringStore.depthAttributeDescription}}"
-            matTooltipPosition="after">
-            <attribute-slider attributeName="Depth"></attribute-slider>
-          </mat-list-item>
-        </mat-list>
+            <mat-list-item>
+              <attribute-slider attributeName="Depth"
+                                matTooltip="{{stringStore.depthAttributeDescription}}"
+                                matTooltipPosition="right"></attribute-slider>
+            </mat-list-item>
+          </mat-list>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="2" class="logo">
+      <mat-grid-tile colspan="4" rowspan="2" class="logo">
 
       </mat-grid-tile>
 
