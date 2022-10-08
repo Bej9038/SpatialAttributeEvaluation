@@ -18,6 +18,7 @@ import { MatDialogModule} from "@angular/material/dialog";
 import { MatButtonModule} from "@angular/material/button";
 import { A11yModule} from '@angular/cdk/a11y';
 import { ResetWarning } from './Components/reset-warning/reset-warning.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,21 +28,22 @@ import { ResetWarning } from './Components/reset-warning/reset-warning.component
     WelcomeMenu,
     ResetWarning
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatGridListModule,
-    MatListModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatDialogModule,
-    MatButtonModule,
-    A11yModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatListModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        MatDialogModule,
+        MatButtonModule,
+        A11yModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

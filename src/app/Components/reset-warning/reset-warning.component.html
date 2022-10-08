@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Starting a new session will erase all data, are you sure you want to continue?</h1>
+<h1>{{stringStore.endSessionWarning}}</h1>
 
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Cancel</button>
-  <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Ok</button>
+  <button mat-button mat-dialog-close="formIsValid" isFocused (click)="resetSession()">Continue</button>
+  <button mat-button mat-dialog-close="formIsValid" >Cancel</button>
 </div>

@@ -1,7 +1,10 @@
 <h1 mat-dialog-title>Welcome</h1>
-<div mat-dialog-content>
-  <p>Please Enter Your Name</p>
-</div>
+<p>Please Enter Your Name </p>
+<mat-form-field appearance="outline">
+  <mat-label>Name</mat-label>
+  <input matInput >
+  <mat-error *ngIf="this.invalidName">Please enter a valid name</mat-error>
+</mat-form-field>
 
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close="formIsValid" cdkFocusInitial>Ok</button>

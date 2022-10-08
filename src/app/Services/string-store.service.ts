@@ -12,6 +12,7 @@ export class StringStoreService {
     "The apparent horizontal spatial extent of the sound image.";
   depthAttributeDescription:string =
     "The apparent distance between the front and the back of the sound image.";
-
+  endSessionWarning:string =
+    "Are you sure you'd like to end the current session?"
 
 }

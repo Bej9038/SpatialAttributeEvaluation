@@ -8,4 +8,6 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class WelcomeMenu {
   formIsValid:boolean = true;
+  userName:string = ""
+  invalidName:boolean = false;
 }
