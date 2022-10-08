@@ -69,16 +69,16 @@ export class ViewComponent {
 
       animate();
 
-      let animProps = {scale: 1, xRot: 0, yRot: 0};
+      let animProps = {scale: .75, xRot: 0, yRot: 0};
 
       gsap.to(animProps, {
-        duration: 10, scale: 1.3, repeat: -1, yoyo: true, ease: "sine", onUpdate: function () {
+        duration: 10, scale: .8, repeat: -1, yoyo: true, ease: "sine", onUpdate: function () {
           renderingParent.scale.set(animProps.scale, animProps.scale, animProps.scale);
         }
       });
 
       gsap.to(animProps, {
-        duration: 120,
+        duration: 20,
         xRot: Math.PI * 2,
         yRot: Math.PI * 4,
         repeat: -1,
