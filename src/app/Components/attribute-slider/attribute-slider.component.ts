@@ -3,7 +3,7 @@ import { Component, Input} from '@angular/core';
 @Component({
   selector: 'attribute-slider',
   templateUrl: './attribute-slider.component.html',
-  styleUrls: ['./attribute-slider.component.scss'],
+  styleUrls: ['./attribute-slider.component.css'],
 })
 export class AttributeSlider {
   @Input() attributeName: string = "";
