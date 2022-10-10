@@ -1,7 +1,7 @@
-import {Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {WebGlService} from "../../Services/web-gl.service";
 import * as THREE from "three";
-import { gsap } from "gsap";
+import {gsap} from "gsap";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 @Component({
@@ -17,6 +17,7 @@ export class ViewComponent {
   private camera:THREE.PerspectiveCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
   // @ts-ignore
   private renderer:THREE.WebGLRenderer;
+  private renderingParent = new THREE.Group();
 
   ngAfterViewInit()
   {
@@ -28,20 +29,24 @@ export class ViewComponent {
       this.initRenderer();
       window.addEventListener("resize", this.onWindowResize)
 
-      let particles = this.createParticles();
+      let particles = this.generateParticles();
 
       let renderingParent = new THREE.Group();
       renderingParent.add(particles);
+      for(let i = 0; i < 100; i++)
+      {
+        let reverb = this.generateReverb();
+        this.scene.add(reverb);
+      }
 
-      // let resizeContainer = new THREE.Group();
-      // resizeContainer.add(renderingParent);
       this.scene.add(renderingParent);
 
+      this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
       this.camera.position.z = 350;
 
-      let gridHelper = new THREE.GridHelper(1000, 50);
+      //let gridHelper = new THREE.GridHelper(1000, 50);
+      //this.scene.add(gridHelper);
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.scene.add(gridHelper);
 
       let animate = () => {
         requestAnimationFrame(animate);
@@ -71,7 +76,17 @@ export class ViewComponent {
     }
   }
 
-  createParticles() {
+  generateReverb() {
+    let geometry = new THREE.SphereGeometry(.25, 24, 24);
+    let material = new THREE.MeshStandardMaterial({color: 0xffffff});
+    let reverb = new THREE.Mesh(geometry, material);
+
+    let [x, y, z] = Array(3).fill(null).map(() => THREE.MathUtils.randFloatSpread(100));
+    reverb.position.set(x, y, z);
+    return reverb;
+  }
+
+  generateParticles() {
     let geometry = new THREE.BufferGeometry();
     let distance = Math.min(200, window.innerWidth / 4);
     let points = [];
