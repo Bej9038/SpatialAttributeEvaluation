@@ -12,8 +12,4 @@ export class AttributeSlider {
   constructor() {
   }
 
-  updateValue()
-  {
-
-  }
 }

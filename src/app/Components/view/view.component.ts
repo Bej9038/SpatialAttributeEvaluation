@@ -4,10 +4,10 @@ import * as THREE from "three";
 import {gsap} from "gsap";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
+
 @Component({
   selector: 'view',
-  template: '<canvas width="100"  #view></canvas>',
-  styleUrls: ['./view.component.css']
+  template: '<canvas width="100"  #view></canvas>'
 })
 export class ViewComponent {
   // @ts-ignore
@@ -18,6 +18,7 @@ export class ViewComponent {
   // @ts-ignore
   private renderer:THREE.WebGLRenderer;
   private renderingParent = new THREE.Group();
+  private particles = new THREE.Points();
 
   ngAfterViewInit()
   {
@@ -29,23 +30,17 @@ export class ViewComponent {
       this.initRenderer();
       window.addEventListener("resize", this.onWindowResize)
 
-      let particles = this.generateParticles();
+      this.particles = this.generateParticles();
+
 
       let renderingParent = new THREE.Group();
-      renderingParent.add(particles);
-      for(let i = 0; i < 100; i++)
-      {
-        let reverb = this.generateReverb();
-        this.scene.add(reverb);
-      }
-
+      renderingParent.add(this.particles);
+      this.generateSoundSphere();
+      this.generateReverb();
       this.scene.add(renderingParent);
-
       this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
-      this.camera.position.z = 350;
 
-      //let gridHelper = new THREE.GridHelper(1000, 50);
-      //this.scene.add(gridHelper);
+      this.camera.position.z = 350;
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
@@ -76,14 +71,29 @@ export class ViewComponent {
     }
   }
 
-  generateReverb() {
-    let geometry = new THREE.SphereGeometry(.25, 24, 24);
-    let material = new THREE.MeshStandardMaterial({color: 0xffffff});
-    let reverb = new THREE.Mesh(geometry, material);
+  generateSoundSphere()
+  {
+    let geometry = new THREE.SphereGeometry(60, 32, 32);
+    // let material = new THREE.ShaderMaterial({
+    //   vertexShader: glslString,
+    //   fragmentShader: fragstring
+    // })
+    let material = new THREE.MeshBasicMaterial({wireframe: true});
+    let mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
+  }
 
-    let [x, y, z] = Array(3).fill(null).map(() => THREE.MathUtils.randFloatSpread(100));
-    reverb.position.set(x, y, z);
-    return reverb;
+  generateReverb() {
+    for(let i = 0; i < 200; i++)
+    {
+      let geometry = new THREE.SphereGeometry(3, 24, 24);
+      let material = new THREE.MeshStandardMaterial({color: 0x7FFFD4});
+      let reverb = new THREE.Mesh(geometry, material);
+
+      let [x, y, z] = Array(3).fill(null).map(() => THREE.MathUtils.randFloatSpread(800));
+      reverb.position.set(x, y, z);
+      this.scene.add(reverb);
+    }
   }
 
   generateParticles() {
@@ -120,8 +130,14 @@ export class ViewComponent {
   }
 
   onWindowResize() {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
+
+  adjustSphereWidth()
+  {
+    this.particles.position.x += .5;
+  }
+
 }
