@@ -4,6 +4,7 @@ import * as THREE from "three";
 import {gsap} from "gsap";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {StringStoreService} from "../../Services/string-store.service";
+import {ShadersService} from "./shaders.service";
 
 @Component({
   selector: 'view',
@@ -19,7 +20,7 @@ export class ViewComponent {
   private renderer:THREE.WebGLRenderer;
   private renderingParent = new THREE.Group();
   private particles = new THREE.Points();
-  stringStore = new StringStoreService();
+  shaderStore = new ShadersService();
 
   ngOnInit() {
     THREE.Cache.enabled = true;
@@ -41,7 +42,7 @@ export class ViewComponent {
       let renderingParent = new THREE.Group();
       renderingParent.add(this.particles);
       this.generateSoundSphere();
-      this.generateReverb();
+      //this.generateReverb();
       this.scene.add(renderingParent);
       this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
 
@@ -76,12 +77,14 @@ export class ViewComponent {
     }
   }
 
+  //graphics generators
+
   generateSoundSphere()
   {
     let geometry = new THREE.SphereGeometry(60, 32, 32);
     let material = new THREE.ShaderMaterial({
-      vertexShader: this.stringStore.vertexShader,
-      fragmentShader: this.stringStore.fragmentShader
+      vertexShader: this.shaderStore.vertexShader,
+      fragmentShader: this.shaderStore.fragmentShader
     })
     material.needsUpdate = true;
 
