@@ -13,17 +13,19 @@ import {ShadersService} from "./shaders.service";
 export class ViewComponent {
   // @ts-ignore
   @ViewChild('view') view: ElementRef<HTMLCanvasElement>;
-  private webGl: WebGlService = new WebGlService();
-  private scene: THREE.Scene = new THREE.Scene();
-  private camera:THREE.PerspectiveCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+  webGl: WebGlService = new WebGlService();
+  scene: THREE.Scene = new THREE.Scene();
+  camera:THREE.PerspectiveCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
   // @ts-ignore
-  private renderer:THREE.WebGLRenderer;
-  private renderingParent = new THREE.Group();
-  private particles = new THREE.Points();
-  shaderStore = new ShadersService();
+  renderer:THREE.WebGLRenderer;
+  renderingParent: THREE.Group = new THREE.Group();
+  particles: THREE.Points = new THREE.Points();
+  shaderStore:ShadersService = new ShadersService();
+  time: THREE.Clock = new THREE.Clock();
 
   ngOnInit() {
     THREE.Cache.enabled = true;
+    this.time.start();
   }
 
   ngAfterViewInit()
@@ -46,7 +48,7 @@ export class ViewComponent {
       this.scene.add(renderingParent);
       this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
 
-      this.camera.position.z = 350;
+      this.camera.position.z = 300;
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
@@ -81,16 +83,27 @@ export class ViewComponent {
 
   generateSoundSphere()
   {
-    let geometry = new THREE.SphereGeometry(60, 32, 32);
+    let geometry = new THREE.SphereGeometry(60, 64, 64);
     let material = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0}
+      },
       vertexShader: this.shaderStore.vertexShader,
       fragmentShader: this.shaderStore.fragmentShader
     })
+     this.updateSoundSphere(material);
+
     material.needsUpdate = true;
 
     //let material = new THREE.MeshBasicMaterial({wireframe: true});
     let mesh = new THREE.Mesh(geometry, material);
     this.scene.add(mesh);
+  }
+
+  updateSoundSphere(material: THREE.ShaderMaterial)
+  {
+    material.uniforms['uTime'].value = this.time.getElapsedTime();
+    this.updateSoundSphere(material);
   }
 
   generateReverb() {
