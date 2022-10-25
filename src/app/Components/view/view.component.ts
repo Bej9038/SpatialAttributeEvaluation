@@ -24,11 +24,14 @@ export class ViewComponent {
   time: THREE.Clock = new THREE.Clock();
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      uTime: { value: 0}
+      uTime: { value: 0},
+      uDisplacementStrength: {value: 10.0}
     },
     vertexShader: this.shaderStore.vertexShader,
     fragmentShader: this.shaderStore.fragmentShader
   });
+
+  clarity:number = 10.0;
 
   ngOnInit() {
     THREE.Cache.enabled = true;
@@ -92,8 +95,6 @@ export class ViewComponent {
   generateSoundSphere()
   {
     let geometry = new THREE.SphereGeometry(60, 64, 64);
-    this.sphereMaterial.needsUpdate = true;
-    //let material = new THREE.MeshBasicMaterial({wireframe: true});
     let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
     this.scene.add(mesh);
   }
@@ -101,6 +102,7 @@ export class ViewComponent {
   updateSoundSphere()
   {
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime();
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.clarity;
   }
 
   generateReverb() {
@@ -158,6 +160,11 @@ export class ViewComponent {
   adjustSphereWidth()
   {
     this.particles.position.x += .5;
+  }
+
+  adjustSphereClarity(val:number)
+  {
+    this.clarity = val;
   }
 
 }

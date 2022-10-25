@@ -22,6 +22,7 @@ export class ShadersService {
 
   vertexShader:string = this.perlin4d.src + this.perlin3d.src + `
   uniform float uTime;
+  uniform float uDisplacementStrength;
 
   varying vec3 vNormal;
 
@@ -29,7 +30,6 @@ export class ShadersService {
   {
     vec3 newPosition = position;
     float uDisplacementFrequency = 3.0;
-    float uDisplacementStrength = 10.0;
     float uDistortionFrequency = 5.0;
     float uTimeStrength = 0.75;
     float uDistTimeStrength = 0.6;
