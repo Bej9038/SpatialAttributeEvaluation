@@ -19,6 +19,7 @@ export class ShadersService {
   `;
 
   vertexShader:string = this.perlin4d.perlid4d + `
+  uniform float uTime;
 
   varying vec3 vNormal;
 
@@ -27,7 +28,7 @@ export class ShadersService {
     vec3 newPosition = position;
     float uFrequency = 5.0;
     float uStrength = 10.0;
-    float perlinStrength = perlin4d(vec4(position, 0.0)) * uStrength;
+    float perlinStrength = perlin4d(vec4(position * uFrequency, uTime)) * uStrength;
     newPosition += normal * perlinStrength;
 
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);

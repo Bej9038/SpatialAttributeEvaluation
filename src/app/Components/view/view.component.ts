@@ -22,6 +22,13 @@ export class ViewComponent {
   particles: THREE.Points = new THREE.Points();
   shaderStore:ShadersService = new ShadersService();
   time: THREE.Clock = new THREE.Clock();
+  sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0}
+    },
+    vertexShader: this.shaderStore.vertexShader,
+    fragmentShader: this.shaderStore.fragmentShader
+  });
 
   ngOnInit() {
     THREE.Cache.enabled = true;
@@ -54,6 +61,7 @@ export class ViewComponent {
       let animate = () => {
         requestAnimationFrame(animate);
         this.renderer.render(this.scene, this.camera);
+        this.updateSoundSphere();
       }
       animate();
 
@@ -84,26 +92,15 @@ export class ViewComponent {
   generateSoundSphere()
   {
     let geometry = new THREE.SphereGeometry(60, 64, 64);
-    let material = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0}
-      },
-      vertexShader: this.shaderStore.vertexShader,
-      fragmentShader: this.shaderStore.fragmentShader
-    })
-     this.updateSoundSphere(material);
-
-    material.needsUpdate = true;
-
+    this.sphereMaterial.needsUpdate = true;
     //let material = new THREE.MeshBasicMaterial({wireframe: true});
-    let mesh = new THREE.Mesh(geometry, material);
+    let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
     this.scene.add(mesh);
   }
 
-  updateSoundSphere(material: THREE.ShaderMaterial)
+  updateSoundSphere()
   {
-    material.uniforms['uTime'].value = this.time.getElapsedTime();
-    this.updateSoundSphere(material);
+    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime();
   }
 
   generateReverb() {
