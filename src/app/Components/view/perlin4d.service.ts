@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class Perlin4dService {
-  perlid4d:string = `
+
+  src:string = `
   vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
   vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
   vec4 fade(vec4 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
@@ -140,6 +141,5 @@ export class Perlin4dService {
     vec2 n_yzw = mix(n_zw.xy, n_zw.zw, fade_xyzw.y);
     float n_xyzw = mix(n_yzw.x, n_yzw.y, fade_xyzw.x);
     return 2.2 * n_xyzw;
-  }
-  `
+  }`
 }
