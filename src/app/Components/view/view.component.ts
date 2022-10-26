@@ -24,23 +24,43 @@ export class ViewComponent {
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0.0 },
-      uDisplacementStrength: { value: 5.0 }
+      uDisplacementStrength: { value: 5.0 },
+      uWidth: { value: 1.0 },
+      uDepth: { value: 1.0 }
     },
     vertexShader: this.shaderStore.vertexShader,
     fragmentShader: this.shaderStore.fragmentShader
   });
 
-  clarity:number = 5.0;
+  sphereClarity:number = 5.0;
+  sphereWidth:number = 1.0;
+  sphereDepth:number = 1.0;
+  sphereImmersion:number = 0.0;
 
   constructor(private sliderValues: SliderValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
   }
 
   ngOnInit() {
+
     THREE.Cache.enabled = true;
     this.time.start();
+
     this.sliderValues.clarity.subscribe(clarity => {
-      this.clarity = clarity;
+      this.sphereClarity = clarity;
     });
+
+    this.sliderValues.width.subscribe(width => {
+      this.sphereWidth = width;
+    });
+
+    this.sliderValues.depth.subscribe(depth => {
+      this.sphereDepth = depth;
+    });
+
+    this.sliderValues.immersion.subscribe(immersion => {
+      this.sphereImmersion = immersion;
+    });
+
   }
 
   ngAfterViewInit()
@@ -54,8 +74,6 @@ export class ViewComponent {
       window.addEventListener("resize", this.onWindowResize)
 
       this.particles = this.generateParticles();
-
-
       let renderingParent = new THREE.Group();
       renderingParent.add(this.particles);
       this.generateSoundSphere();
@@ -107,7 +125,9 @@ export class ViewComponent {
   updateSoundSphere()
   {
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime();
-    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.clarity;
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity;
+    this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
+    this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
   }
 
   generateReverb() {

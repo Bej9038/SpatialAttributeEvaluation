@@ -16,7 +16,19 @@ export class AttributeSlider {
   {
     if(this.attributeName == "Clarity")
     {
-      this.sliderValues.updateClarity(event.value + 5);
+      this.sliderValues.updateClarity(event.value/3 + 5);
+    }
+    else if(this.attributeName == "Width")
+    {
+      this.sliderValues.updateWidth(event.value/100 + 1);
+    }
+    else if(this.attributeName == "Depth")
+    {
+      this.sliderValues.updateDepth(event.value/100 + 1);
+    }
+    else if(this.attributeName == "Immersion")
+    {
+      this.sliderValues.updateImmersion(event.value/100 + 1);
     }
   }
 }

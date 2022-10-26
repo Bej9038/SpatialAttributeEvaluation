@@ -22,6 +22,8 @@ export class ShadersService {
   vertexShader:string = this.perlin4d.src + this.perlin3d.src + `
   uniform float uTime;
   uniform float uDisplacementStrength;
+  uniform float uWidth;
+  uniform float uDepth;
 
   varying vec3 vNormal;
 
@@ -41,6 +43,8 @@ export class ShadersService {
     float perlinStrength = perlin4d(vec4(displacementPosition, uTime * uTimeStrength)) * uDisplacementStrength;
 
     newPosition += normal * perlinStrength;
+    newPosition.x *= uWidth;
+    newPosition.z *= uDepth;
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     gl_Position = projectionMatrix * viewPosition;
