@@ -7,9 +7,9 @@ import {StringStoreService} from "../../Services/string-store.service";
   styleUrls: ['./reset-warning.component.css']
 })
 export class ResetWarning{
-  stringStore = new StringStoreService();
 
-  constructor() { }
+
+  constructor(public stringStore: StringStoreService) {}
 
   ngOnInit(): void {
   }

@@ -4,11 +4,10 @@
   <div class="grid-container">
     <mat-grid-list cols="4" rowHeight="10%">
 
-      <mat-grid-tile #viewgridtile colspan="2" rowspan="8">
+      <mat-grid-tile colspan="2" rowspan="8">
         <mat-card>
-          <view #view></view>
+          <view></view>
         </mat-card>
-<!--        <view [parentElement]="viewgridtile"></view>-->
       </mat-grid-tile>
 
       <mat-grid-tile colspan="2" rowspan="8">
@@ -16,7 +15,8 @@
             <mat-list-item>
               <attribute-slider attributeName="Immersion"
                                 matTooltip="{{stringStore.immersionAttributeDescription}}"
-                                matTooltipPosition="right"></attribute-slider>
+                                matTooltipPosition="right"
+                                ></attribute-slider>
             </mat-list-item>
 
             <mat-list-item>

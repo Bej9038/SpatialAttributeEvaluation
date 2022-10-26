@@ -1,4 +1,5 @@
-import { Component, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {SliderValuesService} from "../../Services/slider-values.service";
 
 @Component({
   selector: 'attribute-slider',
@@ -7,9 +8,15 @@ import { Component, Input} from '@angular/core';
 })
 export class AttributeSlider {
   @Input() attributeName: string = "";
-  value:number = 0;
 
-  constructor() {
+  constructor(private sliderValues: SliderValuesService) {
   }
 
+  emitValue(event:any)
+  {
+    if(this.attributeName == "Clarity")
+    {
+      this.sliderValues.updateClarity(event.value + 5);
+    }
+  }
 }

@@ -2,17 +2,17 @@ import {Component} from '@angular/core';
 import {StringStoreService} from "./Services/string-store.service";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SliderValuesService} from "./Services/slider-values.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  stringStore = new StringStoreService();
   userName:string = ""
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public stringStore: StringStoreService) {}
 
   ngOnInit() {
     this.dialog.open(WelcomeMenu,

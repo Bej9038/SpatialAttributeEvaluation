@@ -7,8 +7,7 @@ import {Perlin3dService} from "./perlin3d.service";
 })
 export class ShadersService {
 
-  perlin3d = new Perlin3dService();
-  perlin4d = new Perlin4dService();
+  constructor(private perlin3d: Perlin3dService, private perlin4d: Perlin4dService) {}
 
   fragmentShader:string = `
   varying vec3 vNormal;

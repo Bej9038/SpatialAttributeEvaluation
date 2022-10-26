@@ -3,8 +3,8 @@ import {WebGlService} from "../../Services/web-gl.service";
 import * as THREE from "three";
 import {gsap} from "gsap";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {StringStoreService} from "../../Services/string-store.service";
 import {ShadersService} from "./shaders.service";
+import {SliderValuesService} from "../../Services/slider-values.service";
 
 @Component({
   selector: 'view',
@@ -13,29 +13,34 @@ import {ShadersService} from "./shaders.service";
 export class ViewComponent {
   // @ts-ignore
   @ViewChild('view') view: ElementRef<HTMLCanvasElement>;
-  webGl: WebGlService = new WebGlService();
   scene: THREE.Scene = new THREE.Scene();
   camera:THREE.PerspectiveCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
   // @ts-ignore
   renderer:THREE.WebGLRenderer;
   renderingParent: THREE.Group = new THREE.Group();
   particles: THREE.Points = new THREE.Points();
-  shaderStore:ShadersService = new ShadersService();
   time: THREE.Clock = new THREE.Clock();
+
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      uTime: { value: 0},
-      uDisplacementStrength: {value: 10.0}
+      uTime: { value: 0.0 },
+      uDisplacementStrength: { value: 5.0 }
     },
     vertexShader: this.shaderStore.vertexShader,
     fragmentShader: this.shaderStore.fragmentShader
   });
 
-  clarity:number = 10.0;
+  clarity:number = 5.0;
+
+  constructor(private sliderValues: SliderValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
+  }
 
   ngOnInit() {
     THREE.Cache.enabled = true;
     this.time.start();
+    this.sliderValues.clarity.subscribe(clarity => {
+      this.clarity = clarity;
+    });
   }
 
   ngAfterViewInit()
@@ -156,15 +161,4 @@ export class ViewComponent {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
-
-  adjustSphereWidth()
-  {
-    this.particles.position.x += .5;
-  }
-
-  adjustSphereClarity(val:number)
-  {
-    this.clarity = val;
-  }
-
 }
