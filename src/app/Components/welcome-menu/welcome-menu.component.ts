@@ -15,8 +15,8 @@ export class WelcomeMenu {
   constructor(private sliderValues: SessionValuesService) {
   }
 
-  updateUsername(event: any)
+  updateUsername(username: string)
   {
-    this.sliderValues.updateUsername(event.value);
+    this.sliderValues.updateUsername(username);
   }
 }
