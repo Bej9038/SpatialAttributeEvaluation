@@ -4,7 +4,7 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class SliderValuesService {
+export class SessionValuesService {
 
   private claritySource = new BehaviorSubject<number>(5.0);
   clarity = this.claritySource.asObservable();
@@ -17,6 +17,9 @@ export class SliderValuesService {
 
   private immersionSource = new BehaviorSubject<number>(1.0);
   immersion = this.immersionSource.asObservable();
+
+  private usernameSource = new BehaviorSubject<string>("");
+  username = this.usernameSource.asObservable();
 
   updateClarity(clarity: number)
   {
@@ -36,5 +39,10 @@ export class SliderValuesService {
   updateImmersion(immersion: number)
   {
     this.immersionSource.next(immersion);
+  }
+
+  updateUsername(username: string)
+  {
+    this.usernameSource.next(username);
   }
 }

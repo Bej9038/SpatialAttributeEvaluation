@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {SliderValuesService} from "../../Services/slider-values.service";
+import {SessionValuesService} from "../../Services/session-values.service";
 
 @Component({
   selector: 'attribute-slider',
@@ -9,7 +9,7 @@ import {SliderValuesService} from "../../Services/slider-values.service";
 export class AttributeSlider {
   @Input() attributeName: string = "";
 
-  constructor(private sliderValues: SliderValuesService) {
+  constructor(private sliderValues: SessionValuesService) {
   }
 
   emitValue(event:any)

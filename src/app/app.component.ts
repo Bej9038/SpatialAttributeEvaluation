@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {StringStoreService} from "./Services/string-store.service";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
 import {MatDialog} from "@angular/material/dialog";
-import {SliderValuesService} from "./Services/slider-values.service";
+import {SessionValuesService} from "./Services/session-values.service";
 
 @Component({
   selector: 'app-root',

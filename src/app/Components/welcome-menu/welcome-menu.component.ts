@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
+import {SessionValuesService} from "../../Services/session-values.service";
 
 @Component({
   selector: 'welcome-menu',
@@ -10,4 +11,12 @@ export class WelcomeMenu {
   formIsValid:boolean = true;
   userName:string = ""
   invalidName:boolean = false;
+
+  constructor(private sliderValues: SessionValuesService) {
+  }
+
+  updateUsername(event: any)
+  {
+    this.sliderValues.updateUsername(event.value);
+  }
 }

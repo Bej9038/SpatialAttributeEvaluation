@@ -4,7 +4,7 @@ import * as THREE from "three";
 import {gsap} from "gsap";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {ShadersService} from "./shaders.service";
-import {SliderValuesService} from "../../Services/slider-values.service";
+import {SessionValuesService} from "../../Services/session-values.service";
 
 @Component({
   selector: 'view',
@@ -37,7 +37,7 @@ export class ViewComponent {
   sphereDepth:number = 1.0;
   sphereImmersion:number = 0.0;
 
-  constructor(private sliderValues: SliderValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
+  constructor(private sliderValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
   }
 
   ngOnInit() {

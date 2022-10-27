@@ -20,7 +20,7 @@ import { A11yModule} from '@angular/cdk/a11y';
 import { ResetWarning } from './Components/reset-warning/reset-warning.component';
 import { FormsModule } from "@angular/forms";
 import { Toolbar } from './Components/toolbar/toolbar.component';
-import {SliderValuesService} from "./Services/slider-values.service";
+import {SessionValuesService} from "./Services/session-values.service";
 
 @NgModule({
   declarations: [
