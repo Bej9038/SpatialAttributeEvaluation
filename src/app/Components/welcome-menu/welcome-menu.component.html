@@ -10,8 +10,8 @@
 
   <mat-grid-tile class="form">
     <mat-form-field appearance="outline">
-      <input [(ngModel)]="input" matInput autocomplete="off">
-      <mat-error *ngIf="invalidName">Please enter a valid name</mat-error>
+      <input [(ngModel)]="input" [formControl]="usernameValidator" matInput autocomplete="off">
+      <mat-error *ngIf="usernameValidator.valid">Please enter a valid name</mat-error>
     </mat-form-field>
   </mat-grid-tile>
 
