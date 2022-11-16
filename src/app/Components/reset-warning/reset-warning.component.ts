@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StringStoreService} from "../../Services/string-store.service";
+import {SessionValuesService} from "../../Services/session-values.service";
+
 
 @Component({
   selector: 'app-reset-warning',
@@ -9,10 +11,7 @@ import {StringStoreService} from "../../Services/string-store.service";
 export class ResetWarning{
 
 
-  constructor(public stringStore: StringStoreService) {}
-
-  ngOnInit(): void {
-  }
+  constructor(public stringStore: StringStoreService, private sliderValues: SessionValuesService) {}
 
   resetSession() {
     location.reload()

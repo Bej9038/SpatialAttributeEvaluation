@@ -10,14 +10,14 @@
 
   <mat-grid-tile class="form">
     <mat-form-field appearance="outline">
-      <input #input matInput autocomplete="off">
+      <input [(ngModel)]="input" matInput autocomplete="off">
       <mat-error *ngIf="invalidName">Please enter a valid name</mat-error>
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile class="button">
     <mat-dialog-actions>
-      <button (click)="updateUsername(input.value)" mat-stroked-button mat-dialog-close="formIsValid" disabled="false">Submit</button>
+      <button (click)="closeDialog()" mat-stroked-button disabled="false">Submit</button>
     </mat-dialog-actions>
   </mat-grid-tile>
 

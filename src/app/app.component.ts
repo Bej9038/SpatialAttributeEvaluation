@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {StringStoreService} from "./Services/string-store.service";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -24,6 +24,7 @@ export class AppComponent {
         autoFocus: false
       });
   }
+
 }
 
 

@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {SessionValuesService} from "../../Services/session-values.service";
 
 @Component({
@@ -9,14 +9,21 @@ import {SessionValuesService} from "../../Services/session-values.service";
 })
 export class WelcomeMenu {
   formIsValid:boolean = true;
-  userName:string = ""
   invalidName:boolean = false;
+  input:string = "";
 
-  constructor(private sliderValues: SessionValuesService) {
+  constructor(private sliderValues: SessionValuesService, private dialogRef: MatDialogRef<WelcomeMenu>) {
   }
 
-  updateUsername(username: string)
+  updateUsername()
   {
-    this.sliderValues.updateUsername(username);
+    this.sliderValues.updateUsername(this.input);
+  }
+
+  @HostListener('window:keyup.Enter', ['$event'])
+  closeDialog()
+  {
+    this.updateUsername();
+    this.dialogRef.close();
   }
 }
