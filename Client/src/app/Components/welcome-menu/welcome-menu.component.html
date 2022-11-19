@@ -11,7 +11,8 @@
   <mat-grid-tile class="form">
     <mat-form-field appearance="outline">
       <input [(ngModel)]="input" [formControl]="usernameValidator" matInput autocomplete="off">
-      <mat-error *ngIf="usernameValidator.valid">Please enter a valid name</mat-error>
+      <mat-error *ngIf="usernameValidator.hasError('maxlength')">Name must be less than 25 characters</mat-error>
+      <mat-error *ngIf="usernameValidator.hasError('required')">Please enter a username</mat-error>
     </mat-form-field>
   </mat-grid-tile>
 

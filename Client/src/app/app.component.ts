@@ -21,7 +21,8 @@ export class AppComponent {
         enterAnimationDuration: '.4s',
         width: '400px',
         height: '340px',
-        autoFocus: false
+        autoFocus: false,
+        disableClose: true
       });
   }
 

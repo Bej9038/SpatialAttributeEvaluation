@@ -10,12 +10,11 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class WelcomeMenu {
   usernameValidator: FormControl = new FormControl('', [Validators.required,
-    Validators.maxLength(25),
-    Validators.pattern('[a-zA-Z]*')]);
+    Validators.maxLength(25)]);
+    // Validators.pattern('[a-zA-Z]*')]);
   input:string = "";
 
-  constructor(private sliderValues: SessionValuesService, private dialogRef: MatDialogRef<WelcomeMenu>) {
-  }
+  constructor(private sliderValues: SessionValuesService, private dialogRef: MatDialogRef<WelcomeMenu>) {}
 
   updateUsername()
   {
@@ -25,6 +24,7 @@ export class WelcomeMenu {
   @HostListener('window:keyup.Enter', ['$event'])
   closeDialog()
   {
+    this.usernameValidator.markAsTouched();
     if(this.usernameValidator.valid)
     {
       this.updateUsername();
