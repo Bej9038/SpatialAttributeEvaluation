@@ -20,7 +20,7 @@ import { A11yModule} from '@angular/cdk/a11y';
 import { ResetWarning } from './Components/reset-warning/reset-warning.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { Toolbar } from './Components/toolbar/toolbar.component';
-import {SessionValuesService} from "./Services/session-values.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import {SessionValuesService} from "./Services/session-values.service";
         MatButtonModule,
         A11yModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]
