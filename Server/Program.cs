@@ -1,12 +1,11 @@
 ﻿using System.Net;
-using System.Runtime.CompilerServices;
 
 class Program
 {
     public static void Main(string[] args)
     {
         HttpListener listener = new HttpListener();
-        string uri = "http://spatialattributes.com/";
+        string uri = "http://www.spatialattributes.com/";
         listener.Prefixes.Add(uri);
         listener.Start();
 
