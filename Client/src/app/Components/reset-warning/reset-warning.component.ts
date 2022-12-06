@@ -17,7 +17,6 @@ export class ResetWarning{
   resetSession() {
     let request = this.client.get(this.stringStore.serverUri,
       {responseType: 'text'});
-    console.log("test");
     request.subscribe(data => console.log(data));
     //location.reload()
   }

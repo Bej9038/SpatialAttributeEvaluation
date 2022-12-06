@@ -2,7 +2,7 @@
 
 class Program
 {
-    const string URI = "http://spatialattributes.com/";
+    const string URI = "http://localhost:8080/";
 
     public static void Main(string[] args)
     {

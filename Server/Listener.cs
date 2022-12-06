@@ -18,6 +18,7 @@ public class Listener
         {
             HttpListenerContext ctx = listener.GetContext();
             HttpListenerResponse response = ctx.Response;
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
             
             string responseString = "Hello world!";
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
