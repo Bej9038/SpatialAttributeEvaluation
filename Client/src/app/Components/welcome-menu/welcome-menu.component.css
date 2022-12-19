@@ -1,11 +1,20 @@
 .subtitle {
-  margin-top: 52px !important;
+  top: -4% !important;
+  margin: 0 !important;
 }
+.mat-grid-list {
+  position: relative;
+  top: 12%;
+}
+
+/*.title {*/
+/*  font-size: 26px !important;*/
+/*}*/
 
 /*.form {*/
 /*  margin-top: 180px !important;*/
 /*}*/
 
 .button {
-  margin-top: 200px !important;
+  top: -8% !important;
 }

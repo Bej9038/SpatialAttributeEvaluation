@@ -6,4 +6,9 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: hidden !important;
+}
+
+.mat-dialog-container {
+  overflow: hidden !important;
 }

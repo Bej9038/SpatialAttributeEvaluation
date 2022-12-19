@@ -14,5 +14,5 @@ export class StringStoreService {
     "The apparent distance between the front and the back of the sound image.";
   endSessionWarning:string =
     "Are you sure you'd like to end the current session?";
-  serverUri:string = "http://localhost:8080/";
+  serverUri:string = "http://rosie:80/";
 }
