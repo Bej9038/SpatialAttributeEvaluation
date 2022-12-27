@@ -16,7 +16,7 @@ export class AttributeSlider {
   {
     if(this.attributeName == "Clarity")
     {
-      this.sliderValues.updateClarity(event.value/3 + 5);
+      this.sliderValues.updateClarity(event.value/3 + 0);
     }
     else if(this.attributeName == "Width")
     {

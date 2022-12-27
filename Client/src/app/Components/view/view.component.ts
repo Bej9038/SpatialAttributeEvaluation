@@ -24,7 +24,7 @@ export class ViewComponent {
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0.0 },
-      uDisplacementStrength: { value: 5.0 },
+      uDisplacementStrength: { value: 0.0 },
       uWidth: { value: 1.0 },
       uDepth: { value: 1.0 }
     },
@@ -32,7 +32,7 @@ export class ViewComponent {
     fragmentShader: this.shaderStore.fragmentShader
   });
 
-  sphereClarity:number = 5.0;
+  sphereClarity:number = 0.0;
   sphereWidth:number = 1.0;
   sphereDepth:number = 1.0;
   sphereImmersion:number = 0.0;
@@ -73,7 +73,7 @@ export class ViewComponent {
       this.initRenderer();
       window.addEventListener("resize", this.onWindowResize)
 
-      this.particles = this.generateParticles();
+      //this.particles = this.generateParticles();
       let renderingParent = new THREE.Group();
       renderingParent.add(this.particles);
       this.generateSoundSphere();
@@ -81,7 +81,7 @@ export class ViewComponent {
       this.scene.add(renderingParent);
       this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
 
-      this.camera.position.z = 300;
+      this.camera.position.z = 2.5;
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
@@ -117,7 +117,7 @@ export class ViewComponent {
 
   generateSoundSphere()
   {
-    let geometry = new THREE.SphereGeometry(60, 64, 64);
+    let geometry = new THREE.SphereGeometry(1, 64, 64);
     let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
     this.scene.add(mesh);
   }

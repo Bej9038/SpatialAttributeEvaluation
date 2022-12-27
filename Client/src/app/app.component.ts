@@ -14,17 +14,17 @@ export class AppComponent {
 
   constructor(public dialog: MatDialog, public stringStore: StringStoreService) {}
 
-  ngOnInit() {
-    this.dialog.open(WelcomeMenu,
-      {
-        exitAnimationDuration: '.8s',
-        enterAnimationDuration: '.4s',
-        width: '400px',
-        height: '340px',
-        autoFocus: false,
-        disableClose: true
-      });
-  }
+  // ngOnInit() {
+  //   this.dialog.open(WelcomeMenu,
+  //     {
+  //       exitAnimationDuration: '.8s',
+  //       enterAnimationDuration: '.4s',
+  //       width: '400px',
+  //       height: '340px',
+  //       autoFocus: false,
+  //       disableClose: true
+  //     });
+  // }
 
 }
 
