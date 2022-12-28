@@ -16,12 +16,7 @@ export class ShadersService {
 
   void main()
   {
-    float test = dot(vNormal, vec3(0.0, - 1.0, 0.0));
-    gl_FragColor = vec4(test, test, test, 1.0);
-
-    // float temp = vPerlinStrength + 0.5;
-    // temp *= 0.5;
-    // gl_FragColor = vec4(temp, temp, temp, 1.0);
+    gl_FragColor = vec4(vColor, 1.0);
   }
   `;
 
@@ -37,6 +32,7 @@ export class ShadersService {
 
   varying vec3 vNormal;
   varying float vPerlinStrength;
+  varying vec3 vColor;
 
   vec4 getDisplacedPosition(vec3 _position)
   {
@@ -57,14 +53,25 @@ export class ShadersService {
     displacedPosition.x *= uWidth;
     displacedPosition.z *= uDepth;
 
-     // colors
-
-    vec4 modelPosition = modelMatrix * vec4(displacedPosition.xyz, 1.0);
-    vec4 viewPosition = viewMatrix * modelPosition;
+    vec4 viewPosition = viewMatrix * vec4(displacedPosition.xyz, 1.0);
     gl_Position = projectionMatrix * viewPosition;
+
+    // colors
+    vec3 uLightColorA = vec3(1.0, 0.2, 0.5);
+    vec3 uLightPositionA = -vec3(1.0, 1.0, 0.0);
+    float lightIntensityA = max(0.0, - dot(normal, normalize(uLightPositionA)));
+
+    vec3 uLightColorB = vec3(0.5, 0.2, 1.0);
+    vec3 uLightPositionB = -vec3(-1.0, -0.5, 0.0);
+    float lightIntensityB = max(0.0, - dot(normal, normalize(uLightPositionB)));
+
+    vec3 color = vec3(0.0);
+    color = mix(color, uLightColorA, lightIntensityA);
+    color = mix(color, uLightColorB, lightIntensityB);
 
     vNormal = normal;
     vPerlinStrength = displacedPosition.a;
+    vColor = color;
   }
   `;
 }
