@@ -17,8 +17,9 @@ export class ShadersService {
 
   void main()
   {
-    float temp = vPerlinStrength;
-    gl_FragColor = vec4(vNormal, 1.0);
+    float temp = vPerlinStrength + 0.1;
+    temp *= 2.0;
+    gl_FragColor = vec4(temp, temp, temp, 1.0);
   }
   `;
 

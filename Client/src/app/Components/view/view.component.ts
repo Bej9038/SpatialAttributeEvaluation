@@ -117,7 +117,7 @@ export class ViewComponent {
 
   generateSoundSphere()
   {
-    let geometry = new THREE.SphereGeometry(1, 64, 64);
+    let geometry = new THREE.SphereGeometry(1, 512, 512);
     let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
     this.scene.add(mesh);
   }
@@ -133,7 +133,7 @@ export class ViewComponent {
   generateReverb() {
     for(let i = 0; i < 200; i++)
     {
-      let geometry = new THREE.SphereGeometry(3, 24, 24);
+      let geometry = new THREE.SphereGeometry(1, 32, 32);
       let material = new THREE.MeshStandardMaterial({color: 0x7FFFD4});
       let reverb = new THREE.Mesh(geometry, material);
 
