@@ -34,7 +34,6 @@ export class ShadersService {
 
   void main()
   {
-
     float uDistortionFrequency = 2.0;
     float uDistortionStrength = 1.0;
     float uDisplacementFrequency = 2.0;
@@ -44,7 +43,7 @@ export class ShadersService {
     vec3 displacementPosition = position;
     displacementPosition += perlin4d(vec4(displacementPosition * uDisplacementFrequency, uTime * uTimeStrength)) * uDistortionStrength;
 
-    float perlinStrength = perlin4d(vec4(displacementPosition * uDisplacementFrequency, uTime * uTimeStrength)) * tempstrength;
+    float perlinStrength = perlin4d(vec4(displacementPosition * uDisplacementFrequency, uTime * uTimeStrength)) * uDisplacementStrength;
 
     vec3 newPosition = position;
     newPosition += normal * perlinStrength;

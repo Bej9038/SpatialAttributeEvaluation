@@ -24,7 +24,7 @@ export class ViewComponent {
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0.0 },
-      uDisplacementStrength: { value: 0.0 },
+      uDisplacementStrength: { value: 0.06 },
       uWidth: { value: 1.0 },
       uDepth: { value: 1.0 }
     },
@@ -32,7 +32,7 @@ export class ViewComponent {
     fragmentShader: this.shaderStore.fragmentShader
   });
 
-  sphereClarity:number = 0.0;
+  sphereClarity:number = 0.06;
   sphereWidth:number = 1.0;
   sphereDepth:number = 1.0;
   sphereImmersion:number = 0.0;
@@ -46,6 +46,7 @@ export class ViewComponent {
     this.time.start();
 
     this.sliderValues.clarity.subscribe(clarity => {
+      console.log(clarity);
       this.sphereClarity = clarity;
     });
 
@@ -75,9 +76,9 @@ export class ViewComponent {
 
       //this.particles = this.generateParticles();
       let renderingParent = new THREE.Group();
-      renderingParent.add(this.particles);
+      //renderingParent.add(this.particles);
       this.generateSoundSphere();
-      //this.generateReverb();
+
       this.scene.add(renderingParent);
       this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
 

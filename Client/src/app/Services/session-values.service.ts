@@ -6,7 +6,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class SessionValuesService {
 
-  private claritySource = new BehaviorSubject<number>(5.0);
+  private claritySource = new BehaviorSubject<number>(0.06);
   clarity = this.claritySource.asObservable();
 
   private widthSource = new BehaviorSubject<number>(1.0);
