@@ -24,9 +24,12 @@ export class ViewComponent {
   sphereMaterial: THREE.ShaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0.0 },
-      uDisplacementStrength: { value: 0.06 },
       uWidth: { value: 1.0 },
-      uDepth: { value: 1.0 }
+      uDepth: { value: 1.0 },
+      uDisplacementStrength: { value: 0.06 },
+      uDistortionFrequency: { value: 2.0},
+      uDistortionStrength: { value: 1.0},
+      uDisplacementFrequency: { value: 2.0},
     },
     vertexShader: this.shaderStore.vertexShader,
     fragmentShader: this.shaderStore.fragmentShader
@@ -46,7 +49,6 @@ export class ViewComponent {
     this.time.start();
 
     this.sliderValues.clarity.subscribe(clarity => {
-      console.log(clarity);
       this.sphereClarity = clarity;
     });
 
@@ -118,14 +120,14 @@ export class ViewComponent {
 
   generateSoundSphere()
   {
-    let geometry = new THREE.SphereGeometry(1, 512, 512);
+    let geometry = new THREE.SphereGeometry(1, 1024, 1024);
     let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
     this.scene.add(mesh);
   }
 
   updateSoundSphere()
   {
-    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime();
+    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.1;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity;
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
