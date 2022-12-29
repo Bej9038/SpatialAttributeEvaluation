@@ -2,7 +2,7 @@
 
 class Program
 {
-    const string URI = "http://localhost:8080/";
+    const string URI = "http://192.168.86.25/";
 
     public static void Main(string[] args)
     {

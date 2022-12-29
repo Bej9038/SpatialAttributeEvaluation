@@ -3,6 +3,7 @@ import {StringStoreService} from "./Services/string-store.service";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SessionValuesService} from "./Services/session-values.service";
+import {AudioService} from "./Services/audio.service";
 
 @Component({
   selector: 'app-root',
@@ -12,19 +13,22 @@ import {SessionValuesService} from "./Services/session-values.service";
 export class AppComponent {
   userName:string = ""
 
-  constructor(public dialog: MatDialog, public stringStore: StringStoreService) {}
+  constructor(private audio: AudioService, public dialog: MatDialog, public stringStore: StringStoreService) {}
 
-  // ngOnInit() {
-  //   this.dialog.open(WelcomeMenu,
-  //     {
-  //       exitAnimationDuration: '.8s',
-  //       enterAnimationDuration: '.4s',
-  //       width: '400px',
-  //       height: '340px',
-  //       autoFocus: false,
-  //       disableClose: true
-  //     });
-  // }
+  ngOnInit() {
+    this.dialog.open(WelcomeMenu,
+      {
+        exitAnimationDuration: '.8s',
+        enterAnimationDuration: '.4s',
+        width: '400px',
+        height: '340px',
+        autoFocus: false,
+        disableClose: true
+      });
+
+    this.audio.loadAudio("../assets/Audio/Windows Hardware Fail.wav");
+    this.audio.play();
+  }
 
 }
 

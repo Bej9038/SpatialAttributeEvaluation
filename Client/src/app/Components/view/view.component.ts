@@ -114,7 +114,7 @@ export class ViewComponent {
         uWidth: { value: 1.0 },
         uDepth: { value: 1.0 },
         uOffsetDirection: { value: this.offsetDir },
-        uOffsetSpeed: { value: 20.0 },
+        uOffsetSpeed: { value: 1.6 },
         uDistortionFrequency: { value: 2.0},
         uDistortionStrength: { value: 1.0},
         uDisplacementStrength: { value: 0.06 },
@@ -145,11 +145,12 @@ export class ViewComponent {
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
 
-    let t = this.time.getElapsedTime();
-    console.log(Math.sin(t));
+    let t = this.time.getElapsedTime() * 25;
+    //console.log(((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI);
     this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2
     this.offsetDir.setFromSpherical(this.offsetSphr);
+    //this.offsetDir.multiplyScalar(2);
 
 
   }

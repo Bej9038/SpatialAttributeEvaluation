@@ -28,7 +28,7 @@ export class ShadersService {
   uniform float uWidth;
   uniform float uDepth;
   uniform float uRadius;
-  uniform float uSubdivs;
+  uniform float uSubDivisions;
 
   uniform vec3 uOffsetDirection;
   uniform float uOffsetSpeed;

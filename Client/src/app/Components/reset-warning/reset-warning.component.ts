@@ -18,6 +18,6 @@ export class ResetWarning{
     let request = this.client.get(this.stringStore.serverUri,
       {responseType: 'text'});
     request.subscribe(data => console.log(data));
-    //location.reload()
+    location.reload()
   }
 }
