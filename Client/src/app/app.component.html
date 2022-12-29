@@ -4,17 +4,17 @@
 
   <!-- view + sliders -->
   <div class="grid-container">
-    <mat-grid-list cols="6" rowHeight="11%">
+    <mat-grid-list cols="8" rowHeight="11%">
 
       <!-- view element -->
-      <mat-grid-tile colspan="4" rowspan="8">
+      <mat-grid-tile colspan="5" rowspan="8">
         <mat-card>
           <view></view>
         </mat-card>
       </mat-grid-tile>
 
       <!-- slider block -->
-      <mat-grid-tile colspan="2" rowspan="8">
+      <mat-grid-tile colspan="3" rowspan="8">
           <mat-list>
             <mat-list-item>
               <attribute-slider attributeName="Immersion"
@@ -41,6 +41,8 @@
                                 matTooltipPosition="right"></attribute-slider>
             </mat-list-item>
           </mat-list>
+
+        <button class="next-button" mat-stroked-button (click)="playAudio()">Next Song</button>
       </mat-grid-tile>
       <!-- end of sliders -->
 
@@ -53,5 +55,7 @@
   <!-- end of view + sliders -->
 
   <!-- footer -->
+  <mat-progress-bar class=progbar mode="determinate" value="10"></mat-progress-bar>
+
   <img class=img src="assets/Images/RIT_rgb_hor_k.png" alt="RIT">
 </body>

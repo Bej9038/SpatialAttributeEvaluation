@@ -152,7 +152,6 @@ export class ViewComponent {
     this.offsetDir.setFromSpherical(this.offsetSphr);
     //this.offsetDir.multiplyScalar(2);
 
-
   }
 
   onWindowResize() {

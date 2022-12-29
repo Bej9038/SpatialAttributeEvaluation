@@ -21,6 +21,7 @@ import { ResetWarning } from './Components/reset-warning/reset-warning.component
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { Toolbar } from './Components/toolbar/toolbar.component';
 import { HttpClientModule } from "@angular/common/http";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -31,24 +32,25 @@ import { HttpClientModule } from "@angular/common/http";
     ResetWarning,
     Toolbar
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatSliderModule,
-        MatGridListModule,
-        MatListModule,
-        MatToolbarModule,
-        MatTooltipModule,
-        MatFormFieldModule,
-        MatCardModule,
-        MatInputModule,
-        MatDialogModule,
-        MatButtonModule,
-        A11yModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatListModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatDialogModule,
+    MatButtonModule,
+    A11yModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatProgressBarModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

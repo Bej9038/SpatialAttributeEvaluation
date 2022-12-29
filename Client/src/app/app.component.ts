@@ -16,17 +16,21 @@ export class AppComponent {
   constructor(private audio: AudioService, public dialog: MatDialog, public stringStore: StringStoreService) {}
 
   ngOnInit() {
-    this.dialog.open(WelcomeMenu,
-      {
-        exitAnimationDuration: '.8s',
-        enterAnimationDuration: '.4s',
-        width: '400px',
-        height: '340px',
-        autoFocus: false,
-        disableClose: true
-      });
+    // this.dialog.open(WelcomeMenu,
+    //   {
+    //     exitAnimationDuration: '.8s',
+    //     enterAnimationDuration: '.4s',
+    //     width: '400px',
+    //     height: '340px',
+    //     autoFocus: false,
+    //     disableClose: true
+    //   });
 
-    this.audio.loadAudio("../assets/Audio/Windows Hardware Fail.wav");
+    this.audio.loadAudio("../assets/Audio/jazz.mp3");
+  }
+
+  playAudio()
+  {
     this.audio.play();
   }
 
