@@ -16,18 +16,26 @@ export class ShadersService {
 
   void main()
   {
+    float test = dot(vColor, vec3(0.0, - 1.0, 0.0));
     gl_FragColor = vec4(vColor, 1.0);
   }
   `;
 
   vertexShader:string = this.perlin4d.src + this.perlin3d.src + `
+  #define M_PI 3.1415926535897932384626433832795
+
   uniform float uTime;
   uniform float uWidth;
   uniform float uDepth;
+  uniform float uRadius;
+  uniform float uSubdivs;
 
-  uniform float uDisplacementStrength;
+  uniform vec3 uOffsetDirection;
+  uniform float uOffsetSpeed;
+
   uniform float uDistortionFrequency;
   uniform float uDistortionStrength;
+  uniform float uDisplacementStrength;
   uniform float uDisplacementFrequency;
 
   varying vec3 vNormal;
@@ -36,13 +44,16 @@ export class ShadersService {
 
   vec4 getDisplacedPosition(vec3 _position)
   {
-    vec3 displacementPosition = _position;
-    displacementPosition += perlin4d(vec4(displacementPosition * uDistortionFrequency, uTime)) * uDistortionStrength;
+    vec3 offsetPosition = uOffsetDirection * uOffsetSpeed;
+    //vec3 offsetPosition = vec3(0.0, 0.0, 0.0) * uTime * 20.0;
 
-    float perlinStrength = perlin4d(vec4(displacementPosition * uDisplacementFrequency, uTime));
+    vec3 displacementPosition = _position;
+    displacementPosition += perlin4d(vec4(displacementPosition * uDistortionFrequency + offsetPosition, uTime)) * uDistortionStrength;
+
+    float perlinStrength = perlin4d(vec4(displacementPosition * uDisplacementFrequency + offsetPosition, uTime));
 
     vec3 displacedPosition =  _position;
-    displacedPosition += normalize( _position) * perlinStrength * uDisplacementStrength;
+    displacedPosition += normalize(_position) * perlinStrength * uDisplacementStrength;
     return vec4(displacedPosition, perlinStrength);
   }
 
@@ -57,12 +68,12 @@ export class ShadersService {
     gl_Position = projectionMatrix * viewPosition;
 
     // colors
-    vec3 uLightColorA = vec3(1.0, 0.2, 0.5);
+    vec3 uLightColorA = vec3(1.0, -1.0, 0.5);
     vec3 uLightPositionA = -vec3(1.0, 1.0, 0.0);
     float lightIntensityA = max(0.0, - dot(normal, normalize(uLightPositionA)));
 
-    vec3 uLightColorB = vec3(0.5, 0.2, 1.0);
-    vec3 uLightPositionB = -vec3(-1.0, -0.5, 0.0);
+    vec3 uLightColorB = vec3(1.0, -1.0, 0.5);
+    vec3 uLightPositionB = -vec3(-1.0, -1.0, 0.0);
     float lightIntensityB = max(0.0, - dot(normal, normalize(uLightPositionB)));
 
     vec3 color = vec3(0.0);

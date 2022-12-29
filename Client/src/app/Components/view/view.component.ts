@@ -16,17 +16,32 @@ export class ViewComponent {
   renderer:THREE.WebGLRenderer;
   scene: THREE.Scene;
   camera:THREE.PerspectiveCamera;
-  time: THREE.Clock
+  time: THREE.Clock;
+  sphereSubdivs: number;
+  sphereRad: number;
+  sphereGeometry: THREE.SphereGeometry;
   sphereMaterial: THREE.ShaderMaterial;
+  offsetSphr: THREE.Spherical;
+  offsetDir: THREE.Vector3;
+
   sphereClarity:number;
   sphereWidth:number;
   sphereDepth:number;
   sphereImmersion:number;
 
+
   constructor(private sliderValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
+    this.sphereSubdivs = 1024.0;
+    this.sphereRad = 1.0;
+
+    this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+    this.offsetDir = new THREE.Vector3();
+    this.offsetDir.setFromSpherical(this.offsetSphr);
+
+    this.sphereGeometry = this.initSphereGeometry();
     this.sphereMaterial = this.initSphereMaterial();
     this.sphereClarity = 0.06;
     this.sphereWidth = 1.0;
@@ -78,36 +93,40 @@ export class ViewComponent {
 
   generateSoundSphere()
   {
-    let geometry = new THREE.SphereGeometry(1, 1024, 1024);
-    geometry.computeTangents();
-    let mesh = new THREE.Mesh(geometry, this.sphereMaterial);
+    let mesh = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
     this.scene.add(mesh);
+  }
+
+  initSphereGeometry()
+  {
+    let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs, this.sphereSubdivs);
+    geometry.computeTangents();
+    return geometry;
   }
 
   initSphereMaterial()
   {
     let sphereMaterial = new THREE.ShaderMaterial({
       uniforms: {
+        uPerimeter: {value: this.sphereGeometry.parameters.radius},
+        uSubDivisions: {value: this.sphereGeometry.parameters.heightSegments},
         uTime: { value: 0.0 },
         uWidth: { value: 1.0 },
         uDepth: { value: 1.0 },
-        uDisplacementStrength: { value: 0.06 },
+        uOffsetDirection: { value: this.offsetDir },
+        uOffsetSpeed: { value: 20.0 },
         uDistortionFrequency: { value: 2.0},
         uDistortionStrength: { value: 1.0},
+        uDisplacementStrength: { value: 0.06 },
         uDisplacementFrequency: { value: 2.0},
+      },
+      defines: {
+        USE_TANGENT: ''
       },
       vertexShader: this.shaderStore.vertexShader,
       fragmentShader: this.shaderStore.fragmentShader
     });
     return sphereMaterial;
-  }
-
-  updateSoundSphere()
-  {
-    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.1;
-    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity;
-    this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
-    this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
   }
 
   initRenderer() {
@@ -116,7 +135,23 @@ export class ViewComponent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    return renderer
+    return renderer;
+  }
+
+  updateSoundSphere()
+  {
+    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.1;
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity;
+    this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
+    this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
+
+    let t = this.time.getElapsedTime();
+    console.log(Math.sin(t));
+    this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI
+    this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2
+    this.offsetDir.setFromSpherical(this.offsetSphr);
+
+
   }
 
   onWindowResize() {
