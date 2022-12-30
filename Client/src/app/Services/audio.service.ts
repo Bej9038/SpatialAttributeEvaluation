@@ -23,11 +23,6 @@ export class AudioService {
     });
   }
 
-  getListener()
-  {
-    return this.listener;
-  }
-
   play()
   {
     this.dest.play();

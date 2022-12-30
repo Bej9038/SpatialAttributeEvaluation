@@ -1,0 +1,10 @@
+.mat-spinner{
+  size: 40px;
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  top: 20%;
+}

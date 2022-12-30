@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {StringStoreService} from "./string-store.service";
+import {MatDialog} from "@angular/material/dialog";
+import {SubmissionDialog} from "../Components/submission-dialog/submission-dialog.component";
+import {AudioService} from "./audio.service";
 
 const NUM_ROUNDS = 10;
 
@@ -24,7 +29,7 @@ export class SessionValuesService {
   numRounds:number;
   currRound:number;
 
-  constructor() {
+  constructor(private audio: AudioService, private client: HttpClient, public stringStore: StringStoreService, private dialog: MatDialog) {
     this.claritySource = new BehaviorSubject<number>(0.06);
     this.clarity = this.claritySource.asObservable();
 
@@ -67,5 +72,39 @@ export class SessionValuesService {
   updateUsername(username: string)
   {
     this.usernameSource.next(username);
+  }
+
+  nextSong()
+  {
+    this.currRound += 100;
+    if(this.currRound/this.numRounds == 100)
+    {
+      this.resetSession();
+    }
+    else
+    {
+      this.audio.stop();
+    }
+  }
+
+  resetSession() {
+    this.audio.stop();
+    this.dialog.open(SubmissionDialog,
+      {
+        exitAnimationDuration: '.8s',
+        enterAnimationDuration: '.4s',
+        width: '400px',
+        height: '340px',
+        autoFocus: false,
+        disableClose: true
+      });
+
+    setTimeout(function(){
+      location.reload();
+    }, 3000);
+
+    // let request = this.client.get(this.stringStore.serverUri,
+    //   {responseType: 'text'});
+    // request.subscribe(data => console.log(data));
   }
 }

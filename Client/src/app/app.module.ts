@@ -22,6 +22,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { Toolbar } from './Components/toolbar/toolbar.component';
 import { HttpClientModule } from "@angular/common/http";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { SubmissionDialog } from './Components/submission-dialog/submission-dialog.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     ViewComponent,
     WelcomeMenu,
     ResetWarning,
-    Toolbar
+    Toolbar,
+    SubmissionDialog
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -29,8 +29,6 @@ export class AppComponent {
         disableClose: true
       });
   }
-
-
 }
 
 

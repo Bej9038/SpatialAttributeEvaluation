@@ -11,12 +11,6 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ResetWarning{
 
-  constructor(private client: HttpClient, public stringStore: StringStoreService) {}
+  constructor(public sessionValues:SessionValuesService, public stringStore:StringStoreService) {}
 
-  resetSession() {
-    let request = this.client.get(this.stringStore.serverUri,
-      {responseType: 'text'});
-    request.subscribe(data => console.log(data));
-    location.reload()
-  }
 }

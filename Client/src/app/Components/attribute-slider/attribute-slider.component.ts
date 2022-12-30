@@ -20,7 +20,7 @@ export class AttributeSlider {
     }
     else if(this.attributeName == "Width")
     {
-      this.sessionValues.updateWidth(event.value/100 + 1);7
+      this.sessionValues.updateWidth(event.value/100 + 1);
     }
     else if(this.attributeName == "Depth")
     {

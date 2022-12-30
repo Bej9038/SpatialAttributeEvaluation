@@ -29,6 +29,11 @@ export class WelcomeMenu {
   }
 
   @HostListener('window:keyup.Enter', ['$event'])
+  onEnter()
+  {
+    this.showDirections ? this.closeDialog() : this.openDirections();
+  }
+
   openDirections()
   {
     this.usernameValidator.markAsTouched();
@@ -40,11 +45,9 @@ export class WelcomeMenu {
     }
   }
 
-  @HostListener('window:keyup.Enter', ['$event'])
   closeDialog()
   {
     this.dialogRef.close();
-    this.sessionValues.currRound += 100;
     this.audio.play();
   }
 }

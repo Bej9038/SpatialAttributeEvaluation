@@ -8,9 +8,7 @@
 
       <!-- view element -->
       <mat-grid-tile colspan="5" rowspan="8">
-        <mat-card>
           <view></view>
-        </mat-card>
       </mat-grid-tile>
 
       <!-- slider block -->
@@ -42,7 +40,7 @@
             </mat-list-item>
           </mat-list>
 
-        <button class="next-button" mat-stroked-button>Next Song</button>
+        <button class="next-button" mat-stroked-button (click)="sessionValues.nextSong()">Next Song</button>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
