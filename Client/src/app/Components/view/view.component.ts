@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {WebGlService} from "../../Services/web-gl.service";
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
@@ -7,7 +7,7 @@ import {SessionValuesService} from "../../Services/session-values.service";
 
 @Component({
   selector: 'view',
-  template: '<canvas width="100"  #view></canvas>'
+  template: '<canvas width="100" style="display: block" #view></canvas>'
 })
 export class ViewComponent {
   // @ts-ignore
@@ -76,7 +76,6 @@ export class ViewComponent {
     else
     {
       this.renderer = this.initRenderer();
-      window.addEventListener("resize", this.onWindowResize)
       this.generateSoundSphere();
       //this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
       this.camera.position.set(0, 0, 2.5);
@@ -146,14 +145,13 @@ export class ViewComponent {
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
 
     let t = this.time.getElapsedTime() * 25;
-    //console.log(((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI);
     this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2
     this.offsetDir.setFromSpherical(this.offsetSphr);
     //this.offsetDir.multiplyScalar(2);
-
   }
 
+  @HostListener('window:resize', ['$event'])
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
