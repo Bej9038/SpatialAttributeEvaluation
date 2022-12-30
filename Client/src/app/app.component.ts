@@ -35,7 +35,7 @@ export class AppComponent {
     this.audio.dest.setVolume(event.value/100);
   }
 
-  @HostListener('window:keydown.space', ['$event'])
+  @HostListener('window:keyup.space', ['$event'])
   playButton()
   {
     this.audio.dest.isPlaying? this.audio.pause() : this.audio.play()
