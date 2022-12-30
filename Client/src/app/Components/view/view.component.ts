@@ -78,7 +78,7 @@ export class ViewComponent {
       this.renderer = this.initRenderer();
       window.addEventListener("resize", this.onWindowResize)
       this.generateSoundSphere();
-      this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
+      //this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
       this.camera.position.set(0, 0, 2.5);
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 

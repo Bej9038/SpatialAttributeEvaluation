@@ -1,2 +1,3 @@
-<mat-slider thumbLabel min="0" max="100" (input)="emitValue($event)"></mat-slider>
+<mat-slider thumbLabel min="0" max="100" [(ngModel)]="value" (input)="emitValue(0, $event)">
+</mat-slider>
 <label>{{attributeName}}</label>

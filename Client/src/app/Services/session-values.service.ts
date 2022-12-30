@@ -12,14 +12,14 @@ const NUM_ROUNDS = 10;
   providedIn: 'root'
 })
 export class SessionValuesService {
+  private sliderResetSource: BehaviorSubject<boolean>;
+  sliderReset:Observable<boolean>;
   private claritySource:BehaviorSubject<number>;
   clarity:Observable<number>;
   private widthSource:BehaviorSubject<number>;
   width:Observable<number>;
-
   private depthSource:BehaviorSubject<number>;
   depth:Observable<number>;
-
   private immersionSource:BehaviorSubject<number>;
   immersion:Observable<number>;
 
@@ -30,6 +30,9 @@ export class SessionValuesService {
   currRound:number;
 
   constructor(private audio: AudioService, private client: HttpClient, public stringStore: StringStoreService, private dialog: MatDialog) {
+    this.sliderResetSource = new BehaviorSubject<boolean>(false);
+    this.sliderReset = this.sliderResetSource.asObservable();
+
     this.claritySource = new BehaviorSubject<number>(0.06);
     this.clarity = this.claritySource.asObservable();
 
@@ -85,6 +88,8 @@ export class SessionValuesService {
     {
       this.audio.stop();
     }
+    this.sliderResetSource.next(true);
+    this.sliderResetSource.next(false);
   }
 
   resetSession() {
