@@ -34,7 +34,7 @@ export class ViewComponent {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
-    this.sphereSubdivs = 1024.0;
+    this.sphereSubdivs = 2048.0;
     this.sphereRad = 1.0;
 
     this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);

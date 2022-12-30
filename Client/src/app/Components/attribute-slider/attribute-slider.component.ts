@@ -20,21 +20,21 @@ export class AttributeSlider {
     this.sessionValues.sliderReset.subscribe(sliderReset => {
       if(sliderReset)
       {
-        this.decrement(this.value, 100/this.value);
+        this.decrement(this.value, 1, (this.value/100) * 2);
       }
     });
   }
 
-  decrement(val:number, decrementTime:number)
+  decrement(val:number, decTime:number, decRate:number)
   {
     if(val > 0)
     {
       this.emitValue(val);
-      val -= 1;
-      this.value--;
+      val -= decRate;
+      this.value -= decRate;
       setTimeout(()=>{
-        this.decrement(val, decrementTime);
-      }, decrementTime);
+        this.decrement(val, decTime, decRate);
+      }, decTime);
     }
   }
 
@@ -47,19 +47,19 @@ export class AttributeSlider {
 
     if(this.attributeName == "Clarity")
     {
-      this.sessionValues.updateClarity(value/200 + .06);
+      this.sessionValues.updateClarity(value/2000 + .06);
     }
     else if(this.attributeName == "Width")
     {
-      this.sessionValues.updateWidth(value/100 + 1);
+      this.sessionValues.updateWidth(value/1000 + 1);
     }
     else if(this.attributeName == "Depth")
     {
-      this.sessionValues.updateDepth(value/100 + 1);
+      this.sessionValues.updateDepth(value/1000 + 1);
     }
     else if(this.attributeName == "Immersion")
     {
-      this.sessionValues.updateImmersion(value/100 + 1);
+      this.sessionValues.updateImmersion(value/1000 + 1);
     }
   }
 }
