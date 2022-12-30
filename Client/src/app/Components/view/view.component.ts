@@ -30,7 +30,7 @@ export class ViewComponent {
   sphereImmersion:number;
 
 
-  constructor(private sliderValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
+  constructor(private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
@@ -53,16 +53,16 @@ export class ViewComponent {
     THREE.Cache.enabled = true;
     this.time.start();
 
-    this.sliderValues.clarity.subscribe(clarity => {
+    this.sessionValues.clarity.subscribe(clarity => {
       this.sphereClarity = clarity;
     });
-    this.sliderValues.width.subscribe(width => {
+    this.sessionValues.width.subscribe(width => {
       this.sphereWidth = width;
     });
-    this.sliderValues.depth.subscribe(depth => {
+    this.sessionValues.depth.subscribe(depth => {
       this.sphereDepth = depth;
     });
-    this.sliderValues.immersion.subscribe(immersion => {
+    this.sessionValues.immersion.subscribe(immersion => {
       this.sphereImmersion = immersion;
     });
   }

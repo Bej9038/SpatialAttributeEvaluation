@@ -1,5 +1,5 @@
 .subtitle {
-  top: -4% !important;
+  top: -16% !important;
   margin: 0 !important;
 }
 .mat-grid-list {
@@ -11,10 +11,17 @@
 /*  font-size: 26px !important;*/
 /*}*/
 
-/*.form {*/
-/*  margin-top: 180px !important;*/
-/*}*/
+.form {
+  top: -30% !important;
+  height: 30%;
+}
 
 .button {
   top: -8% !important;
+}
+
+.directions
+{
+  white-space: pre;
+  text-align: center;
 }

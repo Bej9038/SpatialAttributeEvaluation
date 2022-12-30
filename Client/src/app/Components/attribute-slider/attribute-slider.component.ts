@@ -9,26 +9,26 @@ import {SessionValuesService} from "../../Services/session-values.service";
 export class AttributeSlider {
   @Input() attributeName: string = "";
 
-  constructor(private sliderValues: SessionValuesService) {
+  constructor(private sessionValues: SessionValuesService) {
   }
 
   emitValue(event:any)
   {
     if(this.attributeName == "Clarity")
     {
-      this.sliderValues.updateClarity(event.value/200 + .06);
+      this.sessionValues.updateClarity(event.value/200 + .06);
     }
     else if(this.attributeName == "Width")
     {
-      this.sliderValues.updateWidth(event.value/100 + 1);7
+      this.sessionValues.updateWidth(event.value/100 + 1);7
     }
     else if(this.attributeName == "Depth")
     {
-      this.sliderValues.updateDepth(event.value/100 + 1);
+      this.sessionValues.updateDepth(event.value/100 + 1);
     }
     else if(this.attributeName == "Immersion")
     {
-      this.sliderValues.updateImmersion(event.value/100 + 1);
+      this.sessionValues.updateImmersion(event.value/100 + 1);
     }
   }
 }

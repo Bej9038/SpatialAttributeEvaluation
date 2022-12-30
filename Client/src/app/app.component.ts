@@ -11,28 +11,25 @@ import {AudioService} from "./Services/audio.service";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  userName:string = ""
+  userName:string;
 
-  constructor(private audio: AudioService, public dialog: MatDialog, public stringStore: StringStoreService) {}
+  constructor(private dialog: MatDialog, public stringStore: StringStoreService, public sessionValues: SessionValuesService)
+  {
+    this.userName = "";
+  }
 
   ngOnInit() {
-    // this.dialog.open(WelcomeMenu,
-    //   {
-    //     exitAnimationDuration: '.8s',
-    //     enterAnimationDuration: '.4s',
-    //     width: '400px',
-    //     height: '340px',
-    //     autoFocus: false,
-    //     disableClose: true
-    //   });
-
-    this.audio.loadAudio("../assets/Audio/jazz.mp3");
+    this.dialog.open(WelcomeMenu,
+      {
+        exitAnimationDuration: '.8s',
+        enterAnimationDuration: '.4s',
+        width: '400px',
+        height: '340px',
+        autoFocus: false,
+        disableClose: true
+      });
   }
 
-  playAudio()
-  {
-    this.audio.play();
-  }
 
 }
 

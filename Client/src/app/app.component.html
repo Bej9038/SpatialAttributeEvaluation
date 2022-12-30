@@ -42,20 +42,15 @@
             </mat-list-item>
           </mat-list>
 
-        <button class="next-button" mat-stroked-button (click)="playAudio()">Next Song</button>
+        <button class="next-button" mat-stroked-button>Next Song</button>
       </mat-grid-tile>
-      <!-- end of sliders -->
-
-<!--      <mat-grid-tile colspan="4" rowspan="2" class="logo">-->
-<!--        -->
-<!--      </mat-grid-tile>-->
-
     </mat-grid-list>
   </div>
   <!-- end of view + sliders -->
 
   <!-- footer -->
-  <mat-progress-bar class=progbar mode="determinate" value="10"></mat-progress-bar>
+  <mat-progress-bar class=progbar mode="determinate" value="{{sessionValues.currRound/sessionValues.numRounds}}"></mat-progress-bar>
+<!--  *ngIf="sessionValues.currRound != 0"-->
 
   <img class=img src="assets/Images/RIT_rgb_hor_k.png" alt="RIT">
 </body>

@@ -1,25 +1,48 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+
+const NUM_ROUNDS = 10;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionValuesService {
+  private claritySource:BehaviorSubject<number>;
+  clarity:Observable<number>;
+  private widthSource:BehaviorSubject<number>;
+  width:Observable<number>;
 
-  private claritySource = new BehaviorSubject<number>(0.06);
-  clarity = this.claritySource.asObservable();
+  private depthSource:BehaviorSubject<number>;
+  depth:Observable<number>;
 
-  private widthSource = new BehaviorSubject<number>(1.0);
-  width = this.widthSource.asObservable();
+  private immersionSource:BehaviorSubject<number>;
+  immersion:Observable<number>;
 
-  private depthSource = new BehaviorSubject<number>(1.0);
-  depth = this.depthSource.asObservable();
+  private usernameSource:BehaviorSubject<string>;
+  username:Observable<string>;
 
-  private immersionSource = new BehaviorSubject<number>(1.0);
-  immersion = this.immersionSource.asObservable();
+  numRounds:number;
+  currRound:number;
 
-  private usernameSource = new BehaviorSubject<string>("");
-  username = this.usernameSource.asObservable();
+  constructor() {
+    this.claritySource = new BehaviorSubject<number>(0.06);
+    this.clarity = this.claritySource.asObservable();
+
+    this.widthSource = new BehaviorSubject<number>(1.0);
+    this.width = this.widthSource.asObservable();
+
+    this.depthSource = new BehaviorSubject<number>(1.0);
+    this.depth = this.depthSource.asObservable();
+
+    this.immersionSource = new BehaviorSubject<number>(1.0);
+    this.immersion = this.immersionSource.asObservable();
+
+    this.usernameSource = new BehaviorSubject<string>("");
+    this.username = this.usernameSource.asObservable();
+
+    this.numRounds = NUM_ROUNDS;
+    this.currRound = 0;
+  }
 
   updateClarity(clarity: number)
   {
