@@ -28,7 +28,7 @@ export class WelcomeMenu {
     this.sessionValues.updateUsername(this.input);
   }
 
-  @HostListener('window:keyup.Enter', ['$event'])
+  @HostListener('window:keydown.Enter', ['$event'])
   onEnter()
   {
     this.showDirections ? this.closeDialog() : this.openDirections();
