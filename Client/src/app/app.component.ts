@@ -32,7 +32,7 @@ export class AppComponent {
 
   volSlider(event:any)
   {
-    this.audio.dest.setVolume(event.value/100);
+    this.audio.setVolume(event.value/100);
   }
 
   @HostListener('window:keyup.space', ['$event'])

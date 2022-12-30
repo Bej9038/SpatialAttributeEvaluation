@@ -20,7 +20,8 @@ export class AttributeSlider {
     this.sessionValues.sliderReset.subscribe(sliderReset => {
       if(sliderReset)
       {
-        this.decrement(this.value, 1, (this.value/100) * 2);
+        // this.decrement(this.value, 1, (this.value/100) * 2);
+        this.decrement(this.value, 1, 20);
       }
     });
   }
