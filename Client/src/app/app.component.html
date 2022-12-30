@@ -8,7 +8,9 @@
 
       <!-- view element -->
       <mat-grid-tile colspan="5" rowspan="8">
-          <view></view>
+        <view></view>
+        <button class="playbtn" mat-fab (click)="audio.dest.isPlaying? audio.pause() : audio.play()"><mat-icon>play_circle_outline</mat-icon></button>
+        <mat-slider class="volumesldr" value="{{this.audio.defaultVolume * 100}}" min="0" max="100" (input)="this.volSlider($event)"></mat-slider>
       </mat-grid-tile>
 
       <!-- slider block -->

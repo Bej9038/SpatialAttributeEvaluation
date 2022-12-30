@@ -13,7 +13,7 @@ import {AudioService} from "./Services/audio.service";
 export class AppComponent {
   userName:string;
 
-  constructor(private dialog: MatDialog, public stringStore: StringStoreService, public sessionValues: SessionValuesService)
+  constructor(public audio: AudioService, private dialog: MatDialog, public stringStore: StringStoreService, public sessionValues: SessionValuesService)
   {
     this.userName = "";
   }
@@ -28,6 +28,11 @@ export class AppComponent {
         autoFocus: false,
         disableClose: true
       });
+  }
+
+  volSlider(event:any)
+  {
+    this.audio.dest.setVolume(event.value/100);
   }
 }
 

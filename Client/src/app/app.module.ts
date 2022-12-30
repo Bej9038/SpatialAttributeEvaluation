@@ -24,6 +24,7 @@ import { HttpClientModule } from "@angular/common/http";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { SubmissionDialog } from './Components/submission-dialog/submission-dialog.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -35,26 +36,27 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     Toolbar,
     SubmissionDialog
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatGridListModule,
-    MatListModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatDialogModule,
-    MatButtonModule,
-    A11yModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatListModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        MatDialogModule,
+        MatButtonModule,
+        A11yModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatIconModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

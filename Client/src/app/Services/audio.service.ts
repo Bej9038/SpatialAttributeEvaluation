@@ -7,11 +7,13 @@ import * as THREE from "three";
 export class AudioService {
   listener:THREE.AudioListener;
   dest:THREE.Audio;
+  defaultVolume:number;
 
   constructor()
   {
     this.listener = new THREE.AudioListener();
     this.dest = new THREE.Audio(this.listener);
+    this.defaultVolume = 0.5;
   }
   loadAudio(url:string)
   {
@@ -19,7 +21,7 @@ export class AudioService {
     loader.load(url, (buffer) => {
       this.dest.setBuffer(buffer);
       this.dest.setLoop(true);
-      this.dest.setVolume(0.5);
+      this.dest.setVolume(this.defaultVolume);
     });
   }
 
