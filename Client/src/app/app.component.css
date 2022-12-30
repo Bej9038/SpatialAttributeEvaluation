@@ -23,18 +23,19 @@
 }
 
 .img{
-  width: 400px;
+  width: 420px;
   display: block;
   position: relative;
   margin-left: auto;
   margin-right: auto;
   right: 0;
   left: 0;
-  bottom: 4%;
+  bottom: 7%;
 }
 
 .progbar{
   width: 650px;
+  height: 8px;
   display: block;
   position: relative;
   margin-left: auto;
@@ -42,6 +43,7 @@
   right: 0;
   left: 0;
   bottom: 9%;
+  border-radius: 4px;
 }
 
 .toolbar {

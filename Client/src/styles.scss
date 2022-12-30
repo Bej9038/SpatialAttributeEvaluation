@@ -12,3 +12,24 @@ body {
 .mat-dialog-container {
   overflow: hidden !important;
 }
+
+.mat-slider.mat-slider-horizontal .mat-slider-wrapper {
+  top: 18px;
+}
+
+.mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+  height: 8px;
+  border-radius: 4px;
+}
+.mat-slider.mat-slider-horizontal .mat-slider-track-background,
+.mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+  height: 100%;
+  background-color: lightsteelblue !important;
+}
+.mat-accent .mat-slider-thumb {
+  size: 12px;
+  bottom: -13px;
+  background-color: mediumblue !important;
+  right: -13px;
+}
+
