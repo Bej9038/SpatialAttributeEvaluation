@@ -79,7 +79,6 @@ export class SessionValuesService {
 
   nextSong()
   {
-    this.currRound += 100;
     if(this.currRound/this.numRounds == 100)
     {
       this.resetSession();
@@ -90,6 +89,11 @@ export class SessionValuesService {
     }
     this.sliderResetSource.next(true);
     this.sliderResetSource.next(false);
+    setTimeout(()=>{
+      this.currRound += 100;
+    }, 684);
+
+
   }
 
   resetSession() {

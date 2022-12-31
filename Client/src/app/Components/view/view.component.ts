@@ -4,6 +4,7 @@ import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {ShadersService} from "./shaders.service";
 import {SessionValuesService} from "../../Services/session-values.service";
+import {AudioService} from "../../Services/audio.service";
 
 @Component({
   selector: 'view',
@@ -29,8 +30,10 @@ export class ViewComponent {
   sphereDepth:number;
   sphereImmersion:number;
 
+  frequencyValues: Uint8Array;
 
-  constructor(private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
+
+  constructor(public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
@@ -47,6 +50,8 @@ export class ViewComponent {
     this.sphereWidth = 1.0;
     this.sphereDepth = 1.0;
     this.sphereImmersion = 0.0;
+
+    this.frequencyValues = this.audio.analyser.getFrequencyData();
   }
 
   ngOnInit() {
@@ -148,7 +153,8 @@ export class ViewComponent {
     this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2
     this.offsetDir.setFromSpherical(this.offsetSphr);
-    //this.offsetDir.multiplyScalar(2);
+
+
   }
 
   @HostListener('window:resize', ['$event'])

@@ -12,14 +12,14 @@
 /*}*/
 
 .form {
-  top: -28% !important;
+  top: -30% !important;
   height: 24%;
 }
 
 .mat-form-field
 {
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .button {

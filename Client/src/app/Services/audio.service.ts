@@ -10,6 +10,7 @@ export class AudioService {
   defaultVolume:number;
   currentVolume:number;
   time: THREE.Clock;
+  analyser: THREE.AudioAnalyser;
 
   constructor()
   {
@@ -18,6 +19,7 @@ export class AudioService {
     this.defaultVolume = 0.5;
     this.currentVolume = this.defaultVolume;
     this.time = new THREE.Clock();
+    this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
   }
   loadAudio(url:string)
   {
@@ -48,9 +50,12 @@ export class AudioService {
 
   stop()
   {
+    setTimeout(()=>{
+      this.dest.stop();
+    }, 850);
+
+    this.time.start();
     this.fadeout();
-
-
   }
 
   setVolume(value:number)

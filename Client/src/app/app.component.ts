@@ -19,15 +19,15 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.dialog.open(WelcomeMenu,
-      {
-        exitAnimationDuration: '.8s',
-        enterAnimationDuration: '.4s',
-        width: '400px',
-        height: '340px',
-        autoFocus: false,
-        disableClose: true
-      });
+    // this.dialog.open(WelcomeMenu,
+    //   {
+    //     exitAnimationDuration: '.8s',
+    //     enterAnimationDuration: '.4s',
+    //     width: '400px',
+    //     height: '340px',
+    //     autoFocus: false,
+    //     disableClose: true
+    //   });
   }
 
   volSlider(event:any)

@@ -4,17 +4,16 @@
 
   <!-- view + sliders -->
   <div class="grid-container">
-    <mat-grid-list cols="8" rowHeight="11%">
-
+    <mat-grid-list cols="10" rowHeight="11%">
       <!-- view element -->
-      <mat-grid-tile colspan="5" rowspan="8">
+      <mat-grid-tile colspan="6" rowspan="8">
         <view></view>
         <button class="playbtn" mat-fab (click)="playButton()"><mat-icon>play_circle_outline</mat-icon></button>
         <mat-slider class="volumesldr" value="{{this.audio.defaultVolume * 100}}" min="0" max="100" (input)="this.volSlider($event)"></mat-slider>
       </mat-grid-tile>
 
       <!-- slider block -->
-      <mat-grid-tile colspan="3" rowspan="8">
+      <mat-grid-tile colspan="2" rowspan="8">
           <mat-list>
             <mat-list-item>
               <attribute-slider attributeName="Immersion"
@@ -41,9 +40,12 @@
                                 matTooltipPosition="right"></attribute-slider>
             </mat-list-item>
           </mat-list>
+      </mat-grid-tile>
 
+      <mat-grid-tile colspan="2" rowspan="8">
         <button class="next-button" mat-stroked-button (click)="sessionValues.nextSong()">Next Song</button>
       </mat-grid-tile>
+
     </mat-grid-list>
   </div>
   <!-- end of view + sliders -->
