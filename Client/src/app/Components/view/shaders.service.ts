@@ -71,17 +71,17 @@ export class ShadersService {
 
     // colors
     vec3 uLightColorA = vec3(1.0, -1.0, 0.5);
-    vec3 uLightPositionA = -vec3(1.25, 1.25, 0.0);
+    vec3 uLightPositionA = -vec3(2.5, 2.5, 0.0);
     float lightIntensityA = max(0.0, - dot(normal, normalize(uLightPositionA)));
 
     vec3 uLightColorB = vec3(1.0, -1.0, 0.5);
-    vec3 uLightPositionB = -vec3(-1.25, -1.25, 0.0);
+    vec3 uLightPositionB = -vec3(-2.5, -2.5, 0.0);
     float lightIntensityB = max(0.0, - dot(normal, normalize(uLightPositionB)));
 
-    vec3 color = vec3(uAverageFrequency/80.0);
-    vec3 lightcolor = vec3(0.0);
-    color = mix(color, lightcolor, lightIntensityA);
-    color = mix(color, lightcolor, lightIntensityB);
+    //vec3 color = vec3(uAverageFrequency/50.0);
+    vec3 color = vec3(0.0);
+    color = mix(color, uLightColorA, lightIntensityA);
+    color = mix(color, uLightColorB, lightIntensityB);
 
     vNormal = normal;
     vPerlinStrength = displacedPosition.a;

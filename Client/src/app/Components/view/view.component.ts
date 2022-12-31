@@ -48,7 +48,7 @@ export class ViewComponent {
 
     this.sphereGeometry = this.initSphereGeometry();
     this.sphereMaterial = this.initSphereMaterial();
-    this.sphereClarity = 0.06;
+    this.sphereClarity = 0.04;
     this.sphereWidth = 1.0;
     this.sphereDepth = 1.0;
     this.sphereImmersion = 0.0;
@@ -127,7 +127,7 @@ export class ViewComponent {
         uOffsetSpeed: { value: 1.6 },
         uDistortionFrequency: { value: 2.0},
         uDistortionStrength: { value: 1.0},
-        uDisplacementStrength: { value: 0.06 },
+        uDisplacementStrength: { value: 0.02 },
         uDisplacementFrequency: { value: 2.0},
         uAverageFrequency: { value: 1.0 }
       },
@@ -151,8 +151,10 @@ export class ViewComponent {
 
   updateSoundSphere()
   {
-    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.1;
-    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity;
+    this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
+    let vol = this.getSumOfSquaresVol();
+    vol > 0.1 ? vol /= 2.0 : vol = 0;
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + vol;
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
 
@@ -164,6 +166,17 @@ export class ViewComponent {
     this.audio.analyser.analyser.getFloatFrequencyData(this.frequencyData);
     this.audio.analyser.analyser.getFloatTimeDomainData(this.timedomainData);
     this.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
+  }
+
+  getSumOfSquaresVol()
+  {
+    let arr = this.timedomainData;
+    let sum = 0.0;
+    for(let i = 0; i < arr.length; i++)
+    {
+      sum += arr[i] * arr[i];
+    }
+    return Math.sqrt(sum/arr.length) / 2.0;
   }
 
   @HostListener('window:resize', ['$event'])

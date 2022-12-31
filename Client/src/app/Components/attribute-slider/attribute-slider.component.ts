@@ -48,7 +48,7 @@ export class AttributeSlider {
 
     if(this.attributeName == "Clarity")
     {
-      this.sessionValues.updateClarity(value/2000 + .06);
+      this.sessionValues.updateClarity(value/2000 + .04);
     }
     else if(this.attributeName == "Width")
     {
