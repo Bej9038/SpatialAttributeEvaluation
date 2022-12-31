@@ -30,14 +30,16 @@ export class ViewComponent {
   sphereDepth:number;
   sphereImmersion:number;
 
-  frequencyValues: Uint8Array;
+  frequencyData: Float32Array;
+  timedomainData: Float32Array;
+  avgFrequency: number;
 
 
   constructor(public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
-    this.sphereSubdivs = 2048.0;
+    this.sphereSubdivs = 1024.0;
     this.sphereRad = 1.0;
 
     this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
@@ -51,7 +53,11 @@ export class ViewComponent {
     this.sphereDepth = 1.0;
     this.sphereImmersion = 0.0;
 
-    this.frequencyValues = this.audio.analyser.getFrequencyData();
+    this.frequencyData = new Float32Array(this.audio.analyser.analyser.fftSize/2);
+    this.audio.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.timedomainData = new Float32Array(this.audio.analyser.analyser.fftSize);
+    this.audio.analyser.analyser.getFloatTimeDomainData(this.timedomainData);
+    this.avgFrequency = this.audio.analyser.getAverageFrequency();
   }
 
   ngOnInit() {
@@ -123,6 +129,7 @@ export class ViewComponent {
         uDistortionStrength: { value: 1.0},
         uDisplacementStrength: { value: 0.06 },
         uDisplacementFrequency: { value: 2.0},
+        uAverageFrequency: { value: 1.0 }
       },
       defines: {
         USE_TANGENT: ''
@@ -154,7 +161,9 @@ export class ViewComponent {
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2
     this.offsetDir.setFromSpherical(this.offsetSphr);
 
-
+    this.audio.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.audio.analyser.analyser.getFloatTimeDomainData(this.timedomainData);
+    this.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
   }
 
   @HostListener('window:resize', ['$event'])

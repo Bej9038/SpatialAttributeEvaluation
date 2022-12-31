@@ -91,7 +91,7 @@ export class SessionValuesService {
     this.sliderResetSource.next(false);
     setTimeout(()=>{
       this.currRound += 100;
-    }, 684);
+    }, 850);
 
 
   }
