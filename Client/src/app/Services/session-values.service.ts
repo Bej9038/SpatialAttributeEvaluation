@@ -33,7 +33,7 @@ export class SessionValuesService {
     this.sliderResetSource = new BehaviorSubject<boolean>(false);
     this.sliderReset = this.sliderResetSource.asObservable();
 
-    this.claritySource = new BehaviorSubject<number>(0.04);
+    this.claritySource = new BehaviorSubject<number>(0.0);
     this.clarity = this.claritySource.asObservable();
 
     this.widthSource = new BehaviorSubject<number>(1.0);

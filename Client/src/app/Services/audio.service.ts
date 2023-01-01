@@ -20,7 +20,7 @@ export class AudioService {
     this.currentVolume = this.defaultVolume;
     this.time = new THREE.Clock();
     this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
-    this.analyser.analyser.smoothingTimeConstant = 1.0;
+    //this.analyser.analyser.smoothingTimeConstant = 0.4;
   }
   loadAudio(url:string)
   {
