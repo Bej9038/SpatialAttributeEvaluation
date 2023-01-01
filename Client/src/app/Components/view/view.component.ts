@@ -156,8 +156,7 @@ export class ViewComponent {
     this.updateVolume()
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
 
-    this.sphereMaterial.uniforms['uDisplacementStrength'].value
-      = this.sphereClarity + this.currentVol; //this.time.getDelta() * 10000;
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.currentVol;
 
     //console.log(this.time.getDelta());
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;

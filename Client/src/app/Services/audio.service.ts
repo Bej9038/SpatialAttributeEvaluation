@@ -8,19 +8,20 @@ export class AudioService {
   listener:THREE.AudioListener;
   dest:THREE.Audio;
   defaultVolume:number;
-  currentVolume:number;
+  currentSliderVolume:number;
   time: THREE.Clock;
   analyser: THREE.AudioAnalyser;
+  isPlaying: boolean;
 
   constructor()
   {
     this.listener = new THREE.AudioListener();
     this.dest = new THREE.Audio(this.listener);
     this.defaultVolume = 0.5;
-    this.currentVolume = this.defaultVolume;
+    this.currentSliderVolume = this.defaultVolume;
     this.time = new THREE.Clock();
     this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
-    //this.analyser.analyser.smoothingTimeConstant = 0.4;
+    this.isPlaying = false;
   }
   loadAudio(url:string)
   {
@@ -41,6 +42,7 @@ export class AudioService {
 
   pause()
   {
+    this.isPlaying = false;
     setTimeout(()=>{
       this.dest.pause();
     }, 850);
@@ -51,6 +53,7 @@ export class AudioService {
 
   stop()
   {
+    this.isPlaying = false;
     setTimeout(()=>{
       this.dest.stop();
     }, 850);
@@ -59,11 +62,13 @@ export class AudioService {
     this.fadeout();
   }
 
-  setVolume(value:number)
-  {
-    this.dest.setVolume(value);
-    this.currentVolume = value;
+  setVolume(value:number) {
+    if (this.isPlaying) {
+      this.dest.setVolume(value);
+    }
+    this.currentSliderVolume = value;
   }
+
 
   fadeout()
   {
@@ -82,7 +87,7 @@ export class AudioService {
 
   fadein()
   {
-    if(this.dest.getVolume() <= this.currentVolume)
+    if(this.dest.getVolume() <= this.currentSliderVolume)
     {
       this.dest.setVolume(this.dest.getVolume() + 0.02);
       setTimeout(()=>{
@@ -90,8 +95,8 @@ export class AudioService {
       }, 1);
     }
     else {
-      this.dest.setVolume(this.currentVolume);
-      //console.log(this.time.getElapsedTime());
+      this.dest.setVolume(this.currentSliderVolume);
+      this.isPlaying = true;
     }
   }
 }
