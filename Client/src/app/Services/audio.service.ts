@@ -69,7 +69,6 @@ export class AudioService {
     this.currentSliderVolume = value;
   }
 
-
   fadeout()
   {
     if(this.dest.getVolume() >= 0)

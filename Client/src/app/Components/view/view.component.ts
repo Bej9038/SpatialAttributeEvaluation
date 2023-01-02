@@ -30,8 +30,9 @@ export class ViewComponent {
   sphereDepth:number;
   sphereImmersion:number;
 
-  frequencyData: Float32Array;
-  timedomainData: Float32Array;
+  frequencyData: Uint8Array;
+  // waveformData: Float32Array;
+  waveformData: Float32Array;
   avgFrequency: number;
   currentVol:number;
 
@@ -54,10 +55,11 @@ export class ViewComponent {
     this.sphereDepth = 1.0;
     this.sphereImmersion = 0.0;
 
-    this.frequencyData = new Float32Array(this.audio.analyser.analyser.fftSize/2);
-    this.audio.analyser.analyser.getFloatFrequencyData(this.frequencyData);
-    this.timedomainData = new Float32Array(this.audio.analyser.analyser.fftSize);
-    this.audio.analyser.analyser.getFloatTimeDomainData(this.timedomainData);
+    this.frequencyData = new Uint8Array(this.audio.analyser.analyser.fftSize/2);
+    this.audio.analyser.analyser.getByteFrequencyData(this.frequencyData);
+    this.waveformData = new Float32Array(this.audio.analyser.analyser.fftSize);
+    this.audio.analyser.analyser.getFloatTimeDomainData(this.waveformData);
+
     this.avgFrequency = this.audio.analyser.getAverageFrequency();
     this.currentVol = 0;
   }
@@ -153,28 +155,28 @@ export class ViewComponent {
 
   updateSoundSphere()
   {
-    this.updateVolume()
+    this.audio.analyser.analyser.getByteFrequencyData(this.frequencyData);
+    this.audio.analyser.analyser.getFloatTimeDomainData(this.waveformData);
+
+    this.updateVolume();
+
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
-
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.currentVol;
-
-    //console.log(this.time.getDelta());
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
+    this.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
 
     let t = this.time.getElapsedTime() * 25;
     this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI;
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2;
     this.offsetDir.setFromSpherical(this.offsetSphr);
 
-    this.audio.analyser.analyser.getFloatFrequencyData(this.frequencyData);
-    this.audio.analyser.analyser.getFloatTimeDomainData(this.timedomainData);
-    this.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
   }
 
   updateVolume()
   {
-    let arr = this.timedomainData;
+    let arr = this.waveformData;
+
     let sum = 0.0;
     for(let i = 0; i < arr.length; i++)
     {
@@ -182,6 +184,10 @@ export class ViewComponent {
     }
 
     let target = Math.sqrt(sum/arr.length) / 2.0;
+
+    // let target = Math.sqrt(
+    //   this.waveformData.reduce(function(sum, val){ return sum + val * val}) / this.waveformData.length
+    // ) / 2.0;
     let upease = 0.1;
     let downease = 0.5;
 
