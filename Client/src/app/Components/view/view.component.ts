@@ -30,13 +30,6 @@ export class ViewComponent {
   sphereDepth:number;
   sphereImmersion:number;
 
-  frequencyData: Uint8Array;
-  // waveformData: Float32Array;
-  waveformData: Float32Array;
-  avgFrequency: number;
-  currentVol:number;
-
-
   constructor(public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -54,14 +47,6 @@ export class ViewComponent {
     this.sphereWidth = 1.0;
     this.sphereDepth = 1.0;
     this.sphereImmersion = 0.0;
-
-    this.frequencyData = new Uint8Array(this.audio.analyser.analyser.fftSize/2);
-    this.audio.analyser.analyser.getByteFrequencyData(this.frequencyData);
-    this.waveformData = new Float32Array(this.audio.analyser.analyser.fftSize);
-    this.audio.analyser.analyser.getFloatTimeDomainData(this.waveformData);
-
-    this.avgFrequency = this.audio.analyser.getAverageFrequency();
-    this.currentVol = 0;
   }
 
   ngOnInit() {
@@ -155,13 +140,10 @@ export class ViewComponent {
 
   updateSoundSphere()
   {
-    this.audio.analyser.analyser.getByteFrequencyData(this.frequencyData);
-    this.audio.analyser.analyser.getFloatTimeDomainData(this.waveformData);
-
-    this.updateVolume();
+    this.audio.updateAnalyzerData();
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
-    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.currentVol;
+    this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
     this.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
     this.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
@@ -170,29 +152,6 @@ export class ViewComponent {
     this.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI;
     this.offsetSphr.theta = ((Math.sin(t * 0.0024) * Math.sin(t * 0.00152)) * 0.5 + 0.5) * Math.PI * 2;
     this.offsetDir.setFromSpherical(this.offsetSphr);
-
-  }
-
-  updateVolume()
-  {
-    let arr = this.waveformData;
-
-    let sum = 0.0;
-    for(let i = 0; i < arr.length; i++)
-    {
-      sum += arr[i] * arr[i];
-    }
-
-    let target = Math.sqrt(sum/arr.length) / 2.0;
-
-    // let target = Math.sqrt(
-    //   this.waveformData.reduce(function(sum, val){ return sum + val * val}) / this.waveformData.length
-    // ) / 2.0;
-    let upease = 0.1;
-    let downease = 0.5;
-
-    this.currentVol < target?
-      this.currentVol += (target - this.currentVol) * upease : this.currentVol += (target - this.currentVol) * downease;
   }
 
   @HostListener('window:resize', ['$event'])

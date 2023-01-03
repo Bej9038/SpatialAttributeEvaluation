@@ -12,6 +12,11 @@ export class AudioService {
   time: THREE.Clock;
   analyser: THREE.AudioAnalyser;
   isPlaying: boolean;
+  frequencyData: Float32Array;
+  // waveformData: Float32Array;
+  waveformData: Float32Array;
+  avgFrequency: number;
+  analyzerLevel:number;
 
   constructor()
   {
@@ -20,8 +25,15 @@ export class AudioService {
     this.defaultVolume = 0.5;
     this.currentSliderVolume = this.defaultVolume;
     this.time = new THREE.Clock();
-    this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
     this.isPlaying = false;
+
+    this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
+    this.frequencyData = new Float32Array(this.analyser.analyser.fftSize/2);
+    this.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.waveformData = new Float32Array(this.analyser.analyser.fftSize);
+    this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
+    this.avgFrequency = this.analyser.getAverageFrequency();
+    this.analyzerLevel = 0;
   }
   loadAudio(url:string)
   {
@@ -97,5 +109,28 @@ export class AudioService {
       this.dest.setVolume(this.currentSliderVolume);
       this.isPlaying = true;
     }
+  }
+
+  updateAnalyzerData()
+  {
+    this.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
+    this.updateAnalyzerLevel();
+  }
+
+  updateAnalyzerLevel()
+  {
+    let arr = this.waveformData;
+    let sum = 0.0;
+    for(let i = 0; i < arr.length; i++)
+    {
+      sum += arr[i] * arr[i];
+    }
+    let target = Math.sqrt(sum/arr.length) / 2.0;
+    let upease = 0.1;
+    let downease = 0.5;
+
+    this.analyzerLevel < target?
+      this.analyzerLevel += (target - this.analyzerLevel) * upease : this.analyzerLevel += (target - this.analyzerLevel) * downease;
   }
 }
