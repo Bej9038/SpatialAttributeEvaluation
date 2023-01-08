@@ -92,8 +92,6 @@ export class SessionValuesService {
     setTimeout(()=>{
       this.currRound += 100;
     }, 850);
-
-
   }
 
   resetSession() {

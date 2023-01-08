@@ -10,23 +10,24 @@ import {MatSlider} from "@angular/material/slider";
 export class AttributeSlider {
   @Input() attributeName: string;
   value:number;
+  target:number;
 
   constructor(private sessionValues: SessionValuesService) {
     this.attributeName = "";
     this.value = 0;
+    this.target = 0;
   }
 
   ngAfterViewInit(){
     this.sessionValues.sliderReset.subscribe(sliderReset => {
       if(sliderReset)
       {
-        // this.decrement(this.value, 1, (this.value/100) * 2);
-        this.decrement(this.value, 1, 20);
+        this.reset(this.value, 1, 20);
       }
     });
   }
 
-  decrement(val:number, decTime:number, decRate:number)
+  reset(val:number, decTime:number, decRate:number)
   {
     if(val > 0)
     {
@@ -34,7 +35,7 @@ export class AttributeSlider {
       val -= decRate;
       this.value -= decRate;
       setTimeout(()=>{
-        this.decrement(val, decTime, decRate);
+        this.reset(val, decTime, decRate);
       }, decTime);
     }
   }

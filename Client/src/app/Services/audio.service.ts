@@ -12,11 +12,10 @@ export class AudioService {
   time: THREE.Clock;
   analyser: THREE.AudioAnalyser;
   isPlaying: boolean;
-  frequencyData: Float32Array;
-  // waveformData: Float32Array;
+  frequencyData: Uint8Array;
   waveformData: Float32Array;
-  avgFrequency: number;
   analyzerLevel:number;
+  freqLevels:Array<number>;
 
   constructor()
   {
@@ -28,12 +27,13 @@ export class AudioService {
     this.isPlaying = false;
 
     this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
-    this.frequencyData = new Float32Array(this.analyser.analyser.fftSize/2);
-    this.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.frequencyData = new Uint8Array(this.analyser.analyser.fftSize/2);
+    this.analyser.analyser.getByteFrequencyData(this.frequencyData);
     this.waveformData = new Float32Array(this.analyser.analyser.fftSize);
     this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
-    this.avgFrequency = this.analyser.getAverageFrequency();
+
     this.analyzerLevel = 0;
+    this.freqLevels = new Array<number>(3);
   }
   loadAudio(url:string)
   {
@@ -113,9 +113,10 @@ export class AudioService {
 
   updateAnalyzerData()
   {
-    this.analyser.analyser.getFloatFrequencyData(this.frequencyData);
+    this.analyser.analyser.getByteFrequencyData(this.frequencyData);
     this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
     this.updateAnalyzerLevel();
+    this.updateFreqLevels();
   }
 
   updateAnalyzerLevel()
@@ -126,6 +127,7 @@ export class AudioService {
     {
       sum += arr[i] * arr[i];
     }
+
     let target = Math.sqrt(sum/arr.length) / 2.0;
     let upease = 0.1;
     let downease = 0.5;
@@ -133,4 +135,21 @@ export class AudioService {
     this.analyzerLevel < target?
       this.analyzerLevel += (target - this.analyzerLevel) * upease : this.analyzerLevel += (target - this.analyzerLevel) * downease;
   }
+
+  updateFreqLevels()
+  {
+    let levelCount = 3;
+    let levelBins = Math.floor(this.analyser.analyser.fftSize / levelCount);
+    for(let i = 0; i < levelCount; i++)
+    {
+      let sum = 0;
+      for(let j = 0; j < levelBins; j++)
+      {
+        sum += this.frequencyData[(i * levelBins) + j];
+      }
+      let val = sum / levelBins / 256;
+      this.freqLevels[i] = val ? val : 0;
+    }
+  }
+
 }

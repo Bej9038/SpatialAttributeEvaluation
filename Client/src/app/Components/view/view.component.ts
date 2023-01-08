@@ -34,7 +34,7 @@ export class ViewComponent {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.time = new THREE.Clock();
-    this.sphereSubdivs = 1024.0;
+    this.sphereSubdivs = 1024;
     this.sphereRad = 1.0;
 
     this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
@@ -77,6 +77,14 @@ export class ViewComponent {
     {
       this.renderer = this.initRenderer();
       this.generateSoundSphere();
+
+      //let light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 10);
+      //light.position.set(0, 1, 0);
+      //this.scene.add( light );
+
+      //const particleSystem = new THREE.Points( this.sphereGeometry, this.sphereMaterial );
+      //this.scene.add( particleSystem );
+
       //this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
       this.camera.position.set(0, 0, 2.5);
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -100,13 +108,15 @@ export class ViewComponent {
   {
     let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs, this.sphereSubdivs);
     geometry.computeTangents();
+
     return geometry;
   }
 
   initSphereMaterial()
   {
-    let sphereMaterial = new THREE.ShaderMaterial({
-      uniforms: {
+    let uniforms = THREE.UniformsUtils.merge([
+      THREE.UniformsLib[ "lights" ],
+      {
         uPerimeter: {value: this.sphereGeometry.parameters.radius},
         uSubDivisions: {value: this.sphereGeometry.parameters.heightSegments},
         uTime: { value: 0.0 },
@@ -118,14 +128,20 @@ export class ViewComponent {
         uDistortionStrength: { value: 1.0},
         uDisplacementStrength: { value: 0.0 },
         uDisplacementFrequency: { value: 2.0},
-        uAverageFrequency: { value: 1.0 }
-      },
+        uAverageFrequency: { value: 1.0 },
+      }
+    ]);
+
+    let sphereMaterial = new THREE.ShaderMaterial({
+      lights:true,
+      uniforms: uniforms,
       defines: {
         USE_TANGENT: ''
       },
       vertexShader: this.shaderStore.vertexShader,
-      fragmentShader: this.shaderStore.fragmentShader
+      fragmentShader: this.shaderStore.fragmentShader,
     });
+
     return sphereMaterial;
   }
 
@@ -141,6 +157,7 @@ export class ViewComponent {
   updateSoundSphere()
   {
     this.audio.updateAnalyzerData();
+    //console.log(this.audio.freqLevels);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
