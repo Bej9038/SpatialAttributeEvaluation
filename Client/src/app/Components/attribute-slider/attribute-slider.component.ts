@@ -61,7 +61,7 @@ export class AttributeSlider {
     }
     else if(this.attributeName == "Immersion")
     {
-      this.sessionValues.updateImmersion(value/200 + 1);
+      this.sessionValues.updateImmersion(value/200);
     }
   }
 }

@@ -42,7 +42,7 @@ export class SessionValuesService {
     this.depthSource = new BehaviorSubject<number>(1.0);
     this.depth = this.depthSource.asObservable();
 
-    this.immersionSource = new BehaviorSubject<number>(1.0);
+    this.immersionSource = new BehaviorSubject<number>(0.0);
     this.immersion = this.immersionSource.asObservable();
 
     this.usernameSource = new BehaviorSubject<string>("");

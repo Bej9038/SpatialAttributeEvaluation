@@ -28,6 +28,7 @@ export class ViewComponent {
   sphereMaterial: THREE.ShaderMaterial;
   sphereObject: THREE.Mesh;
   immersionGeometry: THREE.BufferGeometry;
+  immersionPositionArr: Float32Array;
   immersionMaterial: THREE.PointsMaterial;
   immersionObject: THREE.Points;
 
@@ -50,6 +51,8 @@ export class ViewComponent {
     this.sphereGeometry = this.initSphereGeometry();
     this.sphereMaterial = this.initSphereMaterial();
     this.sphereObject = this.generateSphere();
+
+    this.immersionPositionArr = new Float32Array(2000 * 3);
     this.immersionGeometry = this.initImmersionGeometry();
     this.immersionMaterial = this.initImmersionMaterial();
     this.immersionObject = this.generateImmersion();
@@ -89,7 +92,7 @@ export class ViewComponent {
       this.initRenderer();
       this.scene.add(this.immersionObject);
       this.scene.add(this.sphereObject);
-
+      this.immersionObject.scale.set(5, 5, 5);
       this.camera.position.set(0, 0, 3.5);
 
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -119,16 +122,12 @@ export class ViewComponent {
 
   initImmersionGeometry()
   {
-    //let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs/8, this.sphereSubdivs/8);
     let geometry = new THREE.BufferGeometry();
-    let particleCount = 1000;
-    let posArray = new Float32Array(particleCount * 3);
-    for(let i = 0; i < particleCount * 3; i++)
+    for(let i = 0; i < this.immersionPositionArr.length; i++)
     {
-      posArray[i] = Math.random() - 0.5;
+      this.immersionPositionArr[i] = Math.random() - 0.5;
     }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(this.immersionPositionArr, 3));
     return geometry;
   }
 
@@ -136,7 +135,10 @@ export class ViewComponent {
   {
     let material = new THREE.PointsMaterial(
       {
-        size: 0.005
+        size: 0.01,
+        color: 'white',
+        opacity: 0.85,
+        transparent: true,
       }
     );
     return material;
@@ -198,10 +200,11 @@ export class ViewComponent {
   {
     this.audio.updateAnalyzerData();
 
-    //this.immersionObject.scale.setScalar(this.sphereImmersion);
-    this.immersionObject.scale.set(this.sphereImmersion, this.sphereImmersion, this.sphereImmersion);
-    //this.sphereObject.scale.setX(this.sphereWidth);
-    //this.immersionObject.scale.setZ(this.sphereDepth);
+    this.immersionObject.geometry.setAttribute('position',
+      new THREE.BufferAttribute(this.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
+    this.immersionObject.rotateY(0.00015);
+    this.immersionObject.rotateX(0.0001);
+    //this.immersionObject.scale.set(this.sphereImmersion, this.sphereImmersion, this.sphereImmersion);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
