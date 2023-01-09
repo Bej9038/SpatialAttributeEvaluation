@@ -27,7 +27,7 @@ export class ViewComponent {
   sphereGeometry: THREE.SphereGeometry;
   sphereMaterial: THREE.ShaderMaterial;
   sphereObject: THREE.Mesh;
-  immersionGeometry: THREE.SphereGeometry;
+  immersionGeometry: THREE.BufferGeometry;
   immersionMaterial: THREE.PointsMaterial;
   immersionObject: THREE.Points;
 
@@ -87,11 +87,10 @@ export class ViewComponent {
     else
     {
       this.initRenderer();
-      this.generateSphere();
       this.scene.add(this.immersionObject);
       this.scene.add(this.sphereObject);
 
-      this.camera.position.set(0, 0, 2.5);
+      this.camera.position.set(0, 0, 3.5);
 
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
@@ -120,7 +119,16 @@ export class ViewComponent {
 
   initImmersionGeometry()
   {
-    let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs/8, this.sphereSubdivs/8);
+    //let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs/8, this.sphereSubdivs/8);
+    let geometry = new THREE.BufferGeometry();
+    let particleCount = 1000;
+    let posArray = new Float32Array(particleCount * 3);
+    for(let i = 0; i < particleCount * 3; i++)
+    {
+      posArray[i] = Math.random() - 0.5;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     return geometry;
   }
 
@@ -128,7 +136,7 @@ export class ViewComponent {
   {
     let material = new THREE.PointsMaterial(
       {
-        size: 0.0001
+        size: 0.005
       }
     );
     return material;
@@ -190,7 +198,8 @@ export class ViewComponent {
   {
     this.audio.updateAnalyzerData();
 
-    this.immersionObject.scale.setScalar(this.sphereImmersion);
+    //this.immersionObject.scale.setScalar(this.sphereImmersion);
+    this.immersionObject.scale.set(this.sphereImmersion, this.sphereImmersion, this.sphereImmersion);
     //this.sphereObject.scale.setX(this.sphereWidth);
     //this.immersionObject.scale.setZ(this.sphereDepth);
 
