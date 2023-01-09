@@ -128,7 +128,7 @@ export class ViewComponent {
   {
     let material = new THREE.PointsMaterial(
       {
-        size: 0.0005
+        size: 0.0001
       }
     );
     return material;
@@ -163,6 +163,7 @@ export class ViewComponent {
 
     let sphereMaterial = new THREE.ShaderMaterial({
       lights:true,
+      fog:true,
       uniforms: uniforms,
       defines: {
         USE_TANGENT: ''
@@ -190,6 +191,8 @@ export class ViewComponent {
     this.audio.updateAnalyzerData();
 
     this.immersionObject.scale.setScalar(this.sphereImmersion);
+    //this.sphereObject.scale.setX(this.sphereWidth);
+    //this.immersionObject.scale.setZ(this.sphereDepth);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;

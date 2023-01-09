@@ -61,10 +61,12 @@ export class ShadersService {
 
   void main()
   {
+    vec3 stretchPosition = position;
+    stretchPosition.x *= uWidth;
+    stretchPosition.z *= uDepth;
+
     // displaced vertex positions
-    vec4 displacedPosition = getDisplacedPosition(position);
-    displacedPosition.x *= uWidth;
-    displacedPosition.z *= uDepth;
+    vec4 displacedPosition = getDisplacedPosition(stretchPosition);
 
     vec4 viewPosition = viewMatrix * vec4(displacedPosition.xyz, 1.0);
     gl_Position = projectionMatrix * viewPosition;
