@@ -5,6 +5,7 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {ShadersService} from "./shaders.service";
 import {SessionValuesService} from "../../Services/session-values.service";
 import {AudioService} from "../../Services/audio.service";
+import {Vector3} from "three";
 
 @Component({
   selector: 'view',
@@ -20,10 +21,15 @@ export class ViewComponent {
   time: THREE.Clock;
   sphereSubdivs: number;
   sphereRad: number;
-  sphereGeometry: THREE.SphereGeometry;
-  sphereMaterial: THREE.ShaderMaterial;
   offsetSphr: THREE.Spherical;
   offsetDir: THREE.Vector3;
+
+  sphereGeometry: THREE.SphereGeometry;
+  sphereMaterial: THREE.ShaderMaterial;
+  sphereObject: THREE.Mesh;
+  immersionGeometry: THREE.SphereGeometry;
+  immersionMaterial: THREE.PointsMaterial;
+  immersionObject: THREE.Points;
 
   sphereClarity:number;
   sphereWidth:number;
@@ -43,6 +49,11 @@ export class ViewComponent {
 
     this.sphereGeometry = this.initSphereGeometry();
     this.sphereMaterial = this.initSphereMaterial();
+    this.sphereObject = this.generateSphere();
+    this.immersionGeometry = this.initImmersionGeometry();
+    this.immersionMaterial = this.initImmersionMaterial();
+    this.immersionObject = this.generateImmersion();
+
     this.sphereClarity = 0.0;
     this.sphereWidth = 1.0;
     this.sphereDepth = 1.0;
@@ -75,40 +86,58 @@ export class ViewComponent {
     }
     else
     {
-      this.renderer = this.initRenderer();
-      this.generateSoundSphere();
+      this.initRenderer();
+      this.generateSphere();
+      this.scene.add(this.immersionObject);
+      this.scene.add(this.sphereObject);
 
-      //let light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 10);
-      //light.position.set(0, 1, 0);
-      //this.scene.add( light );
-
-      //const particleSystem = new THREE.Points( this.sphereGeometry, this.sphereMaterial );
-      //this.scene.add( particleSystem );
-
-      //this.scene.background = new THREE.TextureLoader().load('assets/Images/UR-music-studio-1000.jpg');
       this.camera.position.set(0, 0, 2.5);
+
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
         requestAnimationFrame(animate);
         this.renderer.render(this.scene, this.camera);
-        this.updateSoundSphere();
+        this.updateGraphics();
       }
       animate();
     }
   }
 
-  generateSoundSphere()
+  // create objects
+
+  generateImmersion()
+  {
+    let points = new THREE.Points(this.immersionGeometry, this.immersionMaterial);
+    return points;
+  }
+
+  generateSphere()
   {
     let mesh = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
-    this.scene.add(mesh);
+    return mesh;
+  }
+
+  initImmersionGeometry()
+  {
+    let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs/8, this.sphereSubdivs/8);
+    return geometry;
+  }
+
+  initImmersionMaterial()
+  {
+    let material = new THREE.PointsMaterial(
+      {
+        size: 0.0005
+      }
+    );
+    return material;
   }
 
   initSphereGeometry()
   {
     let geometry = new THREE.SphereGeometry(this.sphereRad, this.sphereSubdivs, this.sphereSubdivs);
     geometry.computeTangents();
-
     return geometry;
   }
 
@@ -145,19 +174,22 @@ export class ViewComponent {
     return sphereMaterial;
   }
 
+  // utility functions
+
   initRenderer() {
     let renderer = new THREE.WebGLRenderer({
       canvas: this.view.nativeElement
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    return renderer;
+    this.renderer = renderer
   }
 
-  updateSoundSphere()
+  updateGraphics()
   {
     this.audio.updateAnalyzerData();
-    //console.log(this.audio.freqLevels);
+
+    this.immersionObject.scale.setScalar(this.sphereImmersion);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
