@@ -10,6 +10,7 @@ export class ShadersService {
   constructor(private perlin3d: Perlin3dService, private perlin4d: Perlin4dService) {}
 
   fragmentShader:string = `
+  #include <fog_pars_fragment>
   varying vec3 vNormal;
   varying vec3 vColor;
   varying float vPerlinStrength;
@@ -18,10 +19,13 @@ export class ShadersService {
   {
     float test = dot(vColor, vec3(0.0, - 1.0, 0.0));
     gl_FragColor = vec4(vColor, 1.0);
+
+    #include <fog_fragment>
   }
   `;
 
   vertexShader:string = this.perlin4d.src + this.perlin3d.src + `
+  #include <fog_pars_vertex>
   #define M_PI 3.1415926535897932384626433832795
 
   uniform float uTime;
@@ -61,6 +65,10 @@ export class ShadersService {
 
   void main()
   {
+    #include <begin_vertex>
+    #include <project_vertex>
+    #include <fog_vertex>
+
     vec3 stretchPosition = position;
     stretchPosition.x *= uWidth;
     stretchPosition.z *= uDepth;

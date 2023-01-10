@@ -5,7 +5,9 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {ShadersService} from "./shaders.service";
 import {SessionValuesService} from "../../Services/session-values.service";
 import {AudioService} from "../../Services/audio.service";
-import {Vector3} from "three";
+import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer";
+import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
+import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
 @Component({
   selector: 'view',
@@ -16,8 +18,11 @@ export class ViewComponent {
   @ViewChild('view') view: ElementRef<HTMLCanvasElement>;
   // @ts-ignore
   renderer:THREE.WebGLRenderer;
+  // @ts-ignore
+  composer: EffectComposer;
   scene: THREE.Scene;
-  camera:THREE.PerspectiveCamera;
+  camera: THREE.PerspectiveCamera;
+  renderScene: RenderPass;
   time: THREE.Clock;
   sphereSubdivs: number;
   sphereRad: number;
@@ -40,6 +45,7 @@ export class ViewComponent {
   constructor(public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderScene = new RenderPass(this.scene, this.camera);
     this.time = new THREE.Clock();
     this.sphereSubdivs = 1024;
     this.sphereRad = 1.0;
@@ -52,7 +58,7 @@ export class ViewComponent {
     this.sphereMaterial = this.initSphereMaterial();
     this.sphereObject = this.generateSphere();
 
-    this.immersionPositionArr = new Float32Array(2000 * 3);
+    this.immersionPositionArr = new Float32Array(5000 * 3);
     this.immersionGeometry = this.initImmersionGeometry();
     this.immersionMaterial = this.initImmersionMaterial();
     this.immersionObject = this.generateImmersion();
@@ -91,15 +97,24 @@ export class ViewComponent {
     {
       this.initRenderer();
       this.scene.add(this.immersionObject);
-      this.scene.add(this.sphereObject);
       this.immersionObject.scale.set(5, 5, 5);
-      this.camera.position.set(0, 0, 3.5);
+      this.scene.add(this.sphereObject);
+      this.scene.fog = new THREE.FogExp2(0x11111f, 0.25);
 
+      this.composer = new EffectComposer(this.renderer);
+      this.composer.addPass(this.renderScene);
+      let bloom = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        1, 10, 0);
+      this.composer.addPass(bloom);
+
+      this.camera.position.set(0, 0, 3.5);
       let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
         requestAnimationFrame(animate);
-        this.renderer.render(this.scene, this.camera);
+        //this.renderer.render(this.scene, this.camera);
+        this.composer.render();
         this.updateGraphics();
       }
       animate();
@@ -135,10 +150,10 @@ export class ViewComponent {
   {
     let material = new THREE.PointsMaterial(
       {
-        size: 0.01,
-        color: 'white',
-        opacity: 0.85,
+        size: 0.005,
+        opacity: 0.75,
         transparent: true,
+        color: 'red'
       }
     );
     return material;
@@ -154,6 +169,7 @@ export class ViewComponent {
   initSphereMaterial()
   {
     let uniforms = THREE.UniformsUtils.merge([
+      THREE.UniformsLib["fog"],
       THREE.UniformsLib[ "lights" ],
       {
         uPerimeter: {value: this.sphereGeometry.parameters.radius},
@@ -193,7 +209,7 @@ export class ViewComponent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer = renderer
+    this.renderer = renderer;
   }
 
   updateGraphics()
@@ -202,9 +218,8 @@ export class ViewComponent {
 
     this.immersionObject.geometry.setAttribute('position',
       new THREE.BufferAttribute(this.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
-    this.immersionObject.rotateY(0.00015);
-    this.immersionObject.rotateX(0.0001);
-    //this.immersionObject.scale.set(this.sphereImmersion, this.sphereImmersion, this.sphereImmersion);
+    this.immersionObject.rotateY(0.0002);
+    this.immersionObject.rotateX(0.00015);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
