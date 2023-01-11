@@ -99,14 +99,6 @@ export class ModelsService {
     return this.immersionObject;
   }
 
-  updateImmersion()
-  {
-    this.immersionObject.geometry.setAttribute('position',
-      new THREE.BufferAttribute(this.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
-    this.immersionObject.rotateY(0.0002);
-    this.immersionObject.rotateX(0.00015);
-  }
-
   generateImmersion()
   {
     this.initImmersionGeometry();
