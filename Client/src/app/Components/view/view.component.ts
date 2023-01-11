@@ -9,6 +9,7 @@ import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
 import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import {ShaderPass} from "three/examples/jsm/postprocessing/ShaderPass";
 import {ModelsService} from "./models.service";
+import {Vector3} from "three";
 
 @Component({
   selector: 'view',
@@ -142,6 +143,8 @@ export class ViewComponent {
   {
     this.audio.updateAnalyzerData();
 
+    let scaler = this.sphereImmersion/2.5 + 3.5;
+    this.models.getImmersionObject().scale.set(scaler, scaler, scaler);
     this.models.getImmersionObject().geometry.setAttribute('position',
       new THREE.BufferAttribute(this.models.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
     this.models.getImmersionObject().rotateY(0.0002);
