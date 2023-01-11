@@ -73,7 +73,11 @@ export class ViewComponent {
     {
       this.initRenderer();
       this.initBloom();
-      this.initOrbitControls();
+
+      this.models.generateRoom();
+      for(let i = 0; i < this.models.getRoomObject().length - 1; i++) {
+        this.scene.add(this.models.getRoomObject()[i]);
+      }
 
       this.models.generateImmersion();
       this.scene.add(this.models.getImmersionObject());
@@ -81,15 +85,16 @@ export class ViewComponent {
       this.models.generateSphere();
       this.scene.add(this.models.getSphereObject());
 
-      //this.scene.fog = new THREE.FogExp2(0x11111f, 0.25);
-      //this.scene.add( new THREE.AmbientLight( 0x404040 ) );
+      this.camera.position.set(2.5, 5, 10);
+      this.camera.rotateY(Math.PI/8);
+      this.camera.rotateX(-Math.PI/6);
 
-      this.camera.position.set(0, 0, 3.5);
+      //this.initOrbitControls();
 
       let animate = () => {
         requestAnimationFrame(animate);
-        //this.renderer.render(this.scene, this.camera);
-        this.bloomComposer.render();
+        this.renderer.render(this.scene, this.camera);
+        //this.bloomComposer.render();
         this.updateGraphics();
       }
       animate();
@@ -128,7 +133,7 @@ export class ViewComponent {
   initOrbitControls()
   {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableZoom = false;
+    //this.controls.enableZoom = false;
     // this.controls.minDistance = 1;
     // this.controls.maxDistance = 10;
   }

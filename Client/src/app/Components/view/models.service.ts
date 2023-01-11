@@ -7,17 +7,17 @@ import {ShadersService} from "./shaders.service";
 })
 export class ModelsService {
 
+  offsetSphr: THREE.Spherical;
+  offsetDir: THREE.Vector3;
+  sphereSubdivs: number = 1024;
+  sphereRad: number = 1.0;
+
   // @ts-ignore
   sphereGeometry: THREE.SphereGeometry;
   // @ts-ignore
   sphereMaterial: THREE.ShaderMaterial;
   // @ts-ignore
   sphereObject: THREE.Mesh;
-
-  offsetSphr: THREE.Spherical;
-  offsetDir: THREE.Vector3;
-  sphereSubdivs: number = 1024;
-  sphereRad: number = 1.0;
 
   // @ts-ignore
   immersionGeometry: THREE.BufferGeometry;
@@ -29,16 +29,76 @@ export class ModelsService {
   immersionPositionArr: Float32Array;
   numImmersionParticles:number = 10000;
 
-  sphereClarity:number = 0.0;
-  sphereWidth:number = 1.0;
-  sphereDepth:number = 1.0;
-  sphereImmersion:number = 0.0;
+  // @ts-ignore
+  planeGeometry: Array<THREE.PlaneGeometry>;
+  // @ts-ignore
+  planeMaterial: Array<THREE.MeshBasicMaterial>;
+  // @ts-ignore
+  planeObject: Array<THREE.Mesh>;
+
+  planeSize:number = 7.5;
+
 
   constructor(private shaderStore: ShadersService) {
     this.immersionPositionArr = new Float32Array(this.numImmersionParticles * 3);
     this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
     this.offsetDir = new THREE.Vector3();
     this.offsetDir.setFromSpherical(this.offsetSphr);
+  }
+
+    getRoomObject()
+    {
+      return this.planeObject
+    }
+
+    generateRoom()
+    {
+      this.planeObject = new Array<THREE.Mesh>()
+      this.initRoomGeometry();
+      this.initRoomMaterial();
+      for(let i = 0; i < 4; i++)
+      {
+        this.planeObject[i] = new THREE.Mesh(this.planeGeometry[i], this.planeMaterial[0]);
+      }
+
+      //backwall
+      this.planeObject[0].position.set(0, 0, -this.planeSize/2);
+
+      //leftwall
+      this.planeObject[1].rotateY(Math.PI/2);
+      this.planeObject[1].position.set(-this.planeSize/2, 0, 0);
+
+      //floor
+      this.planeObject[2] = new THREE.Mesh(this.planeGeometry[2], this.planeMaterial[1]);
+      this.planeObject[2].rotateX(Math.PI/2);
+      this.planeObject[2].position.set(0, -this.planeSize/2, 0);
+
+      //rightwall
+      this.planeObject[3].rotateY(Math.PI/2);
+      this.planeObject[3].position.set(this.planeSize/2, 0, 0);
+  }
+
+  initRoomGeometry()
+  {
+    this.planeGeometry = new Array<THREE.PlaneGeometry>();
+    for(let i = 0; i < 4; i++)
+    {
+      this.planeGeometry[i] = new THREE.PlaneGeometry(this.planeSize, this.planeSize);
+    }
+  }
+
+  initRoomMaterial()
+  {
+    this.planeMaterial = new Array<THREE.MeshBasicMaterial>();
+    this.planeMaterial[0] = new THREE.MeshBasicMaterial({
+        color: 0x726B6B,
+        side: THREE.DoubleSide
+      });
+
+    this.planeMaterial[1] = new THREE.MeshBasicMaterial({
+      color: 0xD4CBCB,
+      side: THREE.DoubleSide
+    });
   }
 
   getSphereObject()
@@ -104,7 +164,7 @@ export class ModelsService {
     this.initImmersionGeometry();
     this.initImmersionMaterial();
     this.immersionObject = new THREE.Points(this.immersionGeometry, this.immersionMaterial);
-    this.immersionObject.scale.set(5, 5, 5);
+    this.immersionObject.scale.set(this.planeSize - .5, this.planeSize - .5, this.planeSize - .5);
   }
 
   initImmersionGeometry()
@@ -121,7 +181,7 @@ export class ModelsService {
   {
     this.immersionMaterial = new THREE.PointsMaterial(
       {
-        size: 0.01,
+        size: 0.05,
         opacity: 0.75,
         transparent: true,
         color: 'red'
