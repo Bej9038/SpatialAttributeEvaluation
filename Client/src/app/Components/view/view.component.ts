@@ -8,6 +8,8 @@ import {AudioService} from "../../Services/audio.service";
 import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer";
 import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
 import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import {ShaderPass} from "three/examples/jsm/postprocessing/ShaderPass";
+import {ModelsService} from "./models.service";
 
 @Component({
   selector: 'view',
@@ -19,59 +21,47 @@ export class ViewComponent {
   // @ts-ignore
   renderer:THREE.WebGLRenderer;
   // @ts-ignore
-  composer: EffectComposer;
+  bloomComposer: EffectComposer;
+  // @ts-ignore
+  finalComposer: EffectComposer;
+  // @ts-ignore
+  controls: OrbitControls;
+  renderScene: RenderPass;
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
-  renderScene: RenderPass;
   time: THREE.Clock;
-  sphereSubdivs: number;
-  sphereRad: number;
+  bloomLayer: THREE.Layers;
+  // @ts-ignore
+  sphereGeometry: THREE.SphereGeometry;
+  // @ts-ignore
+  sphereMaterial: THREE.ShaderMaterial;
+  // @ts-ignore
+  sphereObject: THREE.Mesh;
+
   offsetSphr: THREE.Spherical;
   offsetDir: THREE.Vector3;
+  sphereSubdivs: number = 1024;
+  sphereRad: number = 1.0;
+  sphereClarity:number = 0.0;
+  sphereWidth:number = 1.0;
+  sphereDepth:number = 1.0;
+  sphereImmersion:number = 0.0;
 
-  sphereGeometry: THREE.SphereGeometry;
-  sphereMaterial: THREE.ShaderMaterial;
-  sphereObject: THREE.Mesh;
-  immersionGeometry: THREE.BufferGeometry;
-  immersionPositionArr: Float32Array;
-  immersionMaterial: THREE.PointsMaterial;
-  immersionObject: THREE.Points;
-
-  sphereClarity:number;
-  sphereWidth:number;
-  sphereDepth:number;
-  sphereImmersion:number;
-
-  constructor(public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
+  constructor(public models:ModelsService, public audio:AudioService, private sessionValues: SessionValuesService, private webGl: WebGlService, private shaderStore: ShadersService) {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderScene = new RenderPass(this.scene, this.camera);
     this.time = new THREE.Clock();
-    this.sphereSubdivs = 1024;
-    this.sphereRad = 1.0;
-
+    this.bloomLayer = new THREE.Layers();
     this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
     this.offsetDir = new THREE.Vector3();
-    this.offsetDir.setFromSpherical(this.offsetSphr);
-
-    this.sphereGeometry = this.initSphereGeometry();
-    this.sphereMaterial = this.initSphereMaterial();
-    this.sphereObject = this.generateSphere();
-
-    this.immersionPositionArr = new Float32Array(5000 * 3);
-    this.immersionGeometry = this.initImmersionGeometry();
-    this.immersionMaterial = this.initImmersionMaterial();
-    this.immersionObject = this.generateImmersion();
-
-    this.sphereClarity = 0.0;
-    this.sphereWidth = 1.0;
-    this.sphereDepth = 1.0;
-    this.sphereImmersion = 0.0;
   }
 
   ngOnInit() {
     THREE.Cache.enabled = true;
     this.time.start();
+    this.offsetDir.setFromSpherical(this.offsetSphr);
+    this.bloomLayer.set(1);
 
     this.sessionValues.clarity.subscribe(clarity => {
       this.sphereClarity = clarity;
@@ -96,25 +86,27 @@ export class ViewComponent {
     else
     {
       this.initRenderer();
-      this.scene.add(this.immersionObject);
-      this.immersionObject.scale.set(5, 5, 5);
-      this.scene.add(this.sphereObject);
-      this.scene.fog = new THREE.FogExp2(0x11111f, 0.25);
+      this.initBloom();
+      this.initOrbitControls();
 
-      this.composer = new EffectComposer(this.renderer);
-      this.composer.addPass(this.renderScene);
-      let bloom = new UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        1, 10, 0);
-      this.composer.addPass(bloom);
+      this.models.generateImmersion();
+      this.scene.add(this.models.getImmersionObject());
+
+      this.sphereGeometry = this.initSphereGeometry();
+      this.sphereMaterial = this.initSphereMaterial();
+      this.sphereObject = this.generateSphere();
+
+      this.scene.add(this.sphereObject);
+
+      //this.scene.fog = new THREE.FogExp2(0x11111f, 0.25);
+      //this.scene.add( new THREE.AmbientLight( 0x404040 ) );
 
       this.camera.position.set(0, 0, 3.5);
-      let orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
       let animate = () => {
         requestAnimationFrame(animate);
         //this.renderer.render(this.scene, this.camera);
-        this.composer.render();
+        this.bloomComposer.render();
         this.updateGraphics();
       }
       animate();
@@ -123,40 +115,12 @@ export class ViewComponent {
 
   // create objects
 
-  generateImmersion()
-  {
-    let points = new THREE.Points(this.immersionGeometry, this.immersionMaterial);
-    return points;
-  }
+
 
   generateSphere()
   {
     let mesh = new THREE.Mesh(this.sphereGeometry, this.sphereMaterial);
     return mesh;
-  }
-
-  initImmersionGeometry()
-  {
-    let geometry = new THREE.BufferGeometry();
-    for(let i = 0; i < this.immersionPositionArr.length; i++)
-    {
-      this.immersionPositionArr[i] = Math.random() - 0.5;
-    }
-    geometry.setAttribute('position', new THREE.BufferAttribute(this.immersionPositionArr, 3));
-    return geometry;
-  }
-
-  initImmersionMaterial()
-  {
-    let material = new THREE.PointsMaterial(
-      {
-        size: 0.005,
-        opacity: 0.75,
-        transparent: true,
-        color: 'red'
-      }
-    );
-    return material;
   }
 
   initSphereGeometry()
@@ -172,6 +136,8 @@ export class ViewComponent {
       THREE.UniformsLib["fog"],
       THREE.UniformsLib[ "lights" ],
       {
+        baseTexture: { value: null },
+        bloomTexture: { value: this.bloomComposer.renderTarget2.texture },
         uPerimeter: {value: this.sphereGeometry.parameters.radius},
         uSubDivisions: {value: this.sphereGeometry.parameters.heightSegments},
         uTime: { value: 0.0 },
@@ -205,21 +171,47 @@ export class ViewComponent {
 
   initRenderer() {
     let renderer = new THREE.WebGLRenderer({
-      canvas: this.view.nativeElement
-    });
+      canvas: this.view.nativeElement,
+      antialias: true
+  });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer = renderer;
+  }
+
+  initBloom()
+  {
+    this.bloomComposer = new EffectComposer(this.renderer);
+    this.finalComposer = new EffectComposer(this.renderer);
+
+    let bloom = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1, 1, 0);
+    this.bloomComposer.addPass(this.renderScene);
+    this.bloomComposer.addPass(bloom);
+
+    let finalpass = new ShaderPass(this.sphereMaterial, 'baseTexture');
+    finalpass.needsSwap = true;
+    this.finalComposer.addPass(this.renderScene);
+    this.finalComposer.addPass(finalpass);
+  }
+
+  initOrbitControls()
+  {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableZoom = false;
+    // this.controls.minDistance = 1;
+    // this.controls.maxDistance = 10;
   }
 
   updateGraphics()
   {
     this.audio.updateAnalyzerData();
 
-    this.immersionObject.geometry.setAttribute('position',
-      new THREE.BufferAttribute(this.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
-    this.immersionObject.rotateY(0.0002);
-    this.immersionObject.rotateX(0.00015);
+    this.models.getImmersionObject().geometry.setAttribute('position',
+      new THREE.BufferAttribute(this.models.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
+    this.models.getImmersionObject().rotateY(0.0002);
+    this.models.getImmersionObject().rotateX(0.00015);
 
     this.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
