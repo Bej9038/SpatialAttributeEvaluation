@@ -128,7 +128,7 @@ export class AudioService {
       sum += arr[i] * arr[i];
     }
 
-    let target = Math.sqrt(sum/arr.length) / 2.0;
+    let target = Math.sqrt(sum/arr.length) / 1.5;
     let upease = 0.1;
     let downease = 0.5;
 
