@@ -36,7 +36,7 @@ export class ModelsService {
   // @ts-ignore
   planeObject: Array<THREE.Mesh>;
 
-  planeSize:number = 7.5;
+  planeSize:number = 6.5;
 
 
   constructor(private shaderStore: ShadersService) {
@@ -181,7 +181,7 @@ export class ModelsService {
   {
     this.immersionMaterial = new THREE.PointsMaterial(
       {
-        size: 0.05,
+        size: 0.02,
         opacity: 0.75,
         transparent: true,
         color: 'red'

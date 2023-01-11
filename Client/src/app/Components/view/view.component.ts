@@ -85,9 +85,9 @@ export class ViewComponent {
       this.models.generateSphere();
       this.scene.add(this.models.getSphereObject());
 
-      this.camera.position.set(2.5, 5, 10);
-      this.camera.rotateY(Math.PI/8);
-      this.camera.rotateX(-Math.PI/6);
+      this.camera.position.set(2, 1.5, 5);
+      this.camera.rotateY(Math.PI/6.25);
+      this.camera.rotateX(-Math.PI/11);
 
       //this.initOrbitControls();
 
