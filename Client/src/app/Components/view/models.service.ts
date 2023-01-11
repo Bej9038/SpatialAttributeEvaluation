@@ -10,7 +10,7 @@ export class ModelsService {
   offsetSphr: THREE.Spherical;
   offsetDir: THREE.Vector3;
   sphereSubdivs: number = 1024;
-  sphereRad: number = 1.0;
+  sphereRad: number = 1.25;
 
   // @ts-ignore
   sphereGeometry: THREE.SphereGeometry;
@@ -36,7 +36,7 @@ export class ModelsService {
   // @ts-ignore
   planeObject: Array<THREE.Mesh>;
 
-  planeSize:number = 6.5;
+  planeSize:number = 7.5;
 
 
   constructor(private shaderStore: ShadersService) {
@@ -48,7 +48,7 @@ export class ModelsService {
 
     getRoomObject()
     {
-      return this.planeObject
+      return this.planeObject;
     }
 
     generateRoom()
