@@ -38,6 +38,11 @@ export class AttributeSlider {
         this.reset(val, decTime, decRate);
       }, decTime);
     }
+    else{
+      this.emitValue(0);
+      this.value = 0;
+    }
+
   }
 
   emitValue(value:number, event?:any)

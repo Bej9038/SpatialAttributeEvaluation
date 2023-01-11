@@ -9,11 +9,10 @@ import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
 import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import {ShaderPass} from "three/examples/jsm/postprocessing/ShaderPass";
 import {ModelsService} from "./models.service";
-import {Vector3} from "three";
 
 @Component({
   selector: 'view',
-  template: '<canvas width="100" style="display: block" #view></canvas>'
+  template: '<canvas width="100" style="display: block;" #view></canvas>'
 })
 export class ViewComponent {
   // @ts-ignore
@@ -86,11 +85,7 @@ export class ViewComponent {
       this.models.generateSphere();
       this.scene.add(this.models.getSphereObject());
 
-      this.camera.position.set(2, 1.5, 5);
-      this.camera.rotateY(Math.PI/6.25);
-      this.camera.rotateX(-Math.PI/11);
-
-      //this.initOrbitControls();
+      this.initOrbitControls();
 
       let animate = () => {
         requestAnimationFrame(animate);
@@ -135,8 +130,15 @@ export class ViewComponent {
   {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     //this.controls.enableZoom = false;
-    // this.controls.minDistance = 1;
-    // this.controls.maxDistance = 10;
+    this.controls.maxAzimuthAngle = Math.PI/2;
+    this.controls.minAzimuthAngle = 0;
+    this.controls.maxPolarAngle = Math.PI/2;
+
+    this.camera.position.set(3, 1.5, 5);
+    this.camera.rotateY(Math.PI/6.25);
+    this.camera.rotateX(-Math.PI/11);
+
+    this.controls.update();
   }
 
   updateGraphics()
@@ -145,8 +147,10 @@ export class ViewComponent {
 
     let scaler = this.sphereImmersion/2.5 + 3.5;
     this.models.getImmersionObject().scale.set(scaler, scaler, scaler);
+
     this.models.getImmersionObject().geometry.setAttribute('position',
       new THREE.BufferAttribute(this.models.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
+
     this.models.getImmersionObject().rotateY(0.0002);
     this.models.getImmersionObject().rotateX(0.00015);
 
