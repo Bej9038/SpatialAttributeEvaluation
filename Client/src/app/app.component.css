@@ -9,13 +9,11 @@
   margin-right: auto;
   right: 0;
   left: 0;
+  background-color: var(--primary1);
+  color: var(--text1);
+  outline: none;
+  border: none;
 }
-
-
-/*.mat-grid-tile{*/
-/*  !*padding: 0;*!*/
-/*}*/
-
 
 .mat-list {
   width: 80%;
@@ -36,6 +34,8 @@
   position: absolute;
   bottom: 6%;
   left: 24px;
+  color: var(--text1);
+  background-color: var(--accent1);
 }
 
 .volumesldr
@@ -58,10 +58,19 @@
   border-radius: 4px;
 }
 
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: var(--primary1) !important;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background-color: var(--primary4) !important;
+}
+
 .toolbar {
   height: 10%;
 }
 
 .grid-container {
+  //background-color: var(--darktheme2);
   height: 90%;
 }

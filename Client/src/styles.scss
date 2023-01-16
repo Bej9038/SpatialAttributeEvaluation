@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --primary1: #3F51B5;
+  --primary2: #7986CB;
+  --primary3: #283593;
+  --primary4: #C5CAE9;
+  //--accent1: #B00020;
+  --accent1: #FFCC80;
+  --warn: #B00020;
+  --text1: #FFFFFF;
+  --darktheme1: #424242;
+  --darktheme2: #212121;
+}
+
 html, body {
   height: 100%;
 }
@@ -24,12 +37,14 @@ body {
 .mat-slider.mat-slider-horizontal .mat-slider-track-background,
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
   height: 100%;
-  background-color: lightsteelblue !important;
+  background-color: var(--primary4) !important;
 }
 .mat-accent .mat-slider-thumb {
   size: 12px;
   bottom: -13px;
-  background-color: mediumblue !important;
+  background-color: var(--primary1) !important;
   right: -13px;
+  border: none;
+  outline: none;
 }
 

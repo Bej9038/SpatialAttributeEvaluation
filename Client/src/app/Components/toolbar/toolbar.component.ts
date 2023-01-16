@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ResetWarning} from "../reset-warning/reset-warning.component";
 import {MatDialog} from "@angular/material/dialog";
-import {WelcomeMenu} from "../welcome-menu/welcome-menu.component";
-
 @Component({
   selector: 'toolbar',
   templateUrl: './toolbar.component.html',

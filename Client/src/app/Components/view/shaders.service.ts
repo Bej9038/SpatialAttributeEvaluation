@@ -43,6 +43,9 @@ export class ShadersService {
   uniform float uDisplacementFrequency;
 
   uniform float uAverageFrequency;
+  uniform float uSphereR;
+  uniform float uSphereG;
+  uniform float uSphereB;
 
   varying vec3 vNormal;
   varying float vPerlinStrength;
@@ -80,18 +83,17 @@ export class ShadersService {
     gl_Position = projectionMatrix * viewPosition;
 
     // colors
-    vec3 uLightColorA = vec3(1.0, -1.0, 0.5);
+    vec3 uLightColorA = vec3(uSphereR/255.0, uSphereG/255.0, uSphereB/255.0);
     vec3 uLightPositionA = -vec3(2.5, 2.5, 0.0);
     float lightIntensityA = max(0.0, - dot(normal, normalize(uLightPositionA)));
 
-    vec3 uLightColorB = vec3(1.0, -1.0, 0.5);
     vec3 uLightPositionB = -vec3(-2.5, -2.5, 0.0);
     float lightIntensityB = max(0.0, - dot(normal, normalize(uLightPositionB)));
 
     //vec3 color = vec3(uAverageFrequency/50.0);
-    vec3 color = vec3(0);
+    vec3 color = vec3(0.0);
     color = mix(color, uLightColorA, lightIntensityA);
-    color = mix(color, uLightColorB, lightIntensityB);
+    color = mix(color, uLightColorA, lightIntensityB);
 
     vNormal = normal;
     vPerlinStrength = displacedPosition.a;
