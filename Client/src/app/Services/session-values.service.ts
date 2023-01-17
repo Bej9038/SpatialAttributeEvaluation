@@ -32,6 +32,8 @@ export class SessionValuesService {
   isDarkMode:boolean = false;
 
   constructor(private audio: AudioService, private client: HttpClient, public stringStore: StringStoreService, private dialog: MatDialog) {
+    this.activateDarkMode();
+
     this.sliderResetSource = new BehaviorSubject<boolean>(false);
     this.sliderReset = this.sliderResetSource.asObservable();
 
@@ -95,23 +97,36 @@ export class SessionValuesService {
 
   activateDarkMode()
   {
+    // @ts-ignore
+    let bglight = getComputedStyle(document.querySelector(':root')).getPropertyValue('--light');
+
+    // @ts-ignore
+    let textlight = getComputedStyle(document.querySelector(':root')).getPropertyValue('--primary4');
+
+    // @ts-ignore
+    let bgdark = getComputedStyle(document.querySelector(':root')).getPropertyValue('--dark1');
+
     if(this.isDarkMode)
     {
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--background', '#FFFFFF');
+      document.querySelector(':root').style.setProperty('--background', bglight);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text2', '#C5CAE9'); // mild blue text
+      document.querySelector(':root').style.setProperty('--text1', bgdark);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text1', '#212121'); // black text
+      document.querySelector(':root').style.setProperty('--text2', textlight);
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text3', '#000000');
       this.isDarkMode = false;
     }
     else {
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--background', '#212121');
+      document.querySelector(':root').style.setProperty('--background', bgdark);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text2', '#212121'); // dark text
+      document.querySelector(':root').style.setProperty('--text1', bglight);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text1', '#FFFFFF'); //white text
+      document.querySelector(':root').style.setProperty('--text2', bgdark);
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text3', bglight);
 
       this.isDarkMode = true;
     }

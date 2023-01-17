@@ -5,6 +5,14 @@
   transition: all .3s ease-in-out;
 }
 
+.mat-card-title
+{
+  font-size: 26px;
+  color: var(--primary4);
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .spacer {
   flex: 1 1 auto;
 }

@@ -1,7 +1,17 @@
+.mat-card-title
+{
+  color: var(--text3);
+}
+
 .subtitle {
   top: -16% !important;
   margin: 0 !important;
 }
+
+.mat-card-subtitle{
+  color: var(--text3);
+}
+
 .mat-grid-list {
   position: relative;
   top: 12%;
@@ -24,10 +34,12 @@
 
 .button {
   top: -8% !important;
+  color: var(--text3);
 }
 
 .directions
 {
+  color: var(--text3);
   white-space: pre;
   text-align: center;
 }
