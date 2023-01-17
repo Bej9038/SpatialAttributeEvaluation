@@ -25,11 +25,14 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow: hidden !important;
+  background-color: var(--background);
+  transition: all .3s ease-in-out;
 }
 
 .mat-dialog-container {
   background-color: var(--background);
   overflow: hidden !important;
+  transition: all .3s ease-in-out;
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-wrapper {

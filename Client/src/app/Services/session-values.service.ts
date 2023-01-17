@@ -112,6 +112,7 @@ export class SessionValuesService {
       document.querySelector(':root').style.setProperty('--text2', '#212121'); // dark text
       // @ts-ignore
       document.querySelector(':root').style.setProperty('--text1', '#FFFFFF'); //white text
+
       this.isDarkMode = true;
     }
   }

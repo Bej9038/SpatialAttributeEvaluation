@@ -5,6 +5,8 @@
 .next-button{
   position: relative;
   display: block;
+  width: 36%;
+  height: 22%;
   margin-left: auto;
   margin-right: auto;
   right: 0;
@@ -13,6 +15,7 @@
   color: var(--text3);
   outline: none;
   border: none;
+  transition: all .3s ease-in-out;
 }
 
 .mat-list {
@@ -28,6 +31,7 @@
   right: 0;
   left: 0;
   bottom: 7%;
+  transition: all .3s ease-in-out;
 }
 .playbtn
 {
@@ -36,6 +40,7 @@
   left: 24px;
   color: var(--text2);
   background-color: var(--primary1);
+  transition: all .3s ease-in-out;
 }
 
 .volumesldr
@@ -60,6 +65,7 @@
 
 .mat-card{
   background-color: var(--background);
+  transition: all .3s ease-in-out;
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
@@ -76,5 +82,20 @@
 
 .grid-container {
   background-color: var(--background);
+  transition: all .3s ease-in-out;
   height: 90%;
 }
+
+.slidergrid {
+  width: 100%;
+  height: 70%;
+  margin: 26px;
+  top: 10%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 3rem;
+  row-gap: 3rem;
+  transition: all .3s ease-in-out;
+}
+

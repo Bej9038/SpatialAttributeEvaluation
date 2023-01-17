@@ -1,3 +1,4 @@
 .label{
   color: var(--text1);
+  transition: all .3s ease-in-out;
 }
