@@ -5,10 +5,15 @@
   --primary2: #7986CB;
   --primary3: #283593;
   --primary4: #C5CAE9;
-  //--accent1: #B00020;
-  --accent1: #FFCC80;
+  --accent1: #00BFA5;
+  --accent2: #B2DFDB;
   --warn: #B00020;
-  --text1: #FFFFFF;
+
+  --text1: #212121;
+  --text2: #C5CAE9;
+  --text3: #FFFFFF;
+
+  --background: #FFFFFF;
   --darktheme1: #424242;
   --darktheme2: #212121;
 }
@@ -23,6 +28,7 @@ body {
 }
 
 .mat-dialog-container {
+  background-color: var(--background);
   overflow: hidden !important;
 }
 

@@ -4,6 +4,12 @@
   text-align: center;
 }
 
+.mat-dialog-title{
+  color: var(--text1);
+}
+
 .button {
   padding: 0 40px 0 !important;
+  background-color: var(--primary1);
+  color: var(--text3);
 }

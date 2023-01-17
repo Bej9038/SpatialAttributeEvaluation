@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ResetWarning} from "../reset-warning/reset-warning.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SessionValuesService} from "../../Services/session-values.service";
 @Component({
   selector: 'toolbar',
   templateUrl: './toolbar.component.html',
@@ -8,7 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class Toolbar{
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public sessionValues: SessionValuesService, public dialog: MatDialog) {}
 
   endSession()
   {
@@ -17,7 +18,8 @@ export class Toolbar{
         exitAnimationDuration: '.4s',
         enterAnimationDuration: '.4s',
         height: '160px',
-        autoFocus: false
+        autoFocus: false,
+        panelClass: "resetwarning"
       });
   }
 }

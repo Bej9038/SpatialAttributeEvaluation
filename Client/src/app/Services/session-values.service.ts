@@ -26,8 +26,10 @@ export class SessionValuesService {
   private usernameSource:BehaviorSubject<string>;
   username:Observable<string>;
 
-  numRounds:number;
-  currRound:number;
+  numRounds:number = NUM_ROUNDS;
+  currRound:number = 0;
+
+  isDarkMode:boolean = false;
 
   constructor(private audio: AudioService, private client: HttpClient, public stringStore: StringStoreService, private dialog: MatDialog) {
     this.sliderResetSource = new BehaviorSubject<boolean>(false);
@@ -47,9 +49,6 @@ export class SessionValuesService {
 
     this.usernameSource = new BehaviorSubject<string>("");
     this.username = this.usernameSource.asObservable();
-
-    this.numRounds = NUM_ROUNDS;
-    this.currRound = 0;
   }
 
   updateClarity(clarity: number)
@@ -92,6 +91,29 @@ export class SessionValuesService {
     setTimeout(()=>{
       this.currRound += 100;
     }, 850);
+  }
+
+  activateDarkMode()
+  {
+    if(this.isDarkMode)
+    {
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--background', '#FFFFFF');
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text2', '#C5CAE9'); // mild blue text
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text1', '#212121'); // black text
+      this.isDarkMode = false;
+    }
+    else {
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--background', '#212121');
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text2', '#212121'); // dark text
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text1', '#FFFFFF'); //white text
+      this.isDarkMode = true;
+    }
   }
 
   resetSession() {

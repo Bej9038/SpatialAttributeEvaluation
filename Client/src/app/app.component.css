@@ -9,8 +9,8 @@
   margin-right: auto;
   right: 0;
   left: 0;
-  background-color: var(--primary1);
-  color: var(--text1);
+  background-color: var(--accent1);
+  color: var(--text3);
   outline: none;
   border: none;
 }
@@ -34,8 +34,8 @@
   position: absolute;
   bottom: 6%;
   left: 24px;
-  color: var(--text1);
-  background-color: var(--accent1);
+  color: var(--text2);
+  background-color: var(--primary1);
 }
 
 .volumesldr
@@ -58,12 +58,16 @@
   border-radius: 4px;
 }
 
+.mat-card{
+  background-color: var(--background);
+}
+
 ::ng-deep .mat-progress-bar-fill::after {
-  background-color: var(--primary1) !important;
+  background-color: var(--accent1) !important;
 }
 
 ::ng-deep .mat-progress-bar-buffer {
-  background-color: var(--primary4) !important;
+  background-color: var(--accent2) !important;
 }
 
 .toolbar {
@@ -71,6 +75,6 @@
 }
 
 .grid-container {
-  //background-color: var(--darktheme2);
+  background-color: var(--background);
   height: 90%;
 }

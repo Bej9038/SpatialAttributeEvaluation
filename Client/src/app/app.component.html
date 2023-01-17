@@ -14,7 +14,8 @@
       </mat-grid-tile>
 
       <!-- slider block -->
-      <mat-grid-tile colspan="2" rowspan="8">
+      <mat-grid-tile colspan="4" rowspan="4">
+        <mat-card>
           <mat-list>
             <mat-list-item>
               <attribute-slider attributeName="Immersion"
@@ -41,9 +42,10 @@
                                 matTooltipPosition="right"></attribute-slider>
             </mat-list-item>
           </mat-list>
+        </mat-card>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="8">
+      <mat-grid-tile colspan="4" rowspan="4">
         <button class="next-button" mat-stroked-button (click)="sessionValues.nextSong()">Next Song</button>
       </mat-grid-tile>
 
@@ -55,5 +57,5 @@
   <mat-progress-bar class=progbar mode="determinate" value="{{sessionValues.currRound/sessionValues.numRounds}}"></mat-progress-bar>
 <!--  *ngIf="sessionValues.currRound != 0"-->
 
-  <img class=img src="assets/Images/RIT_rgb_hor_k.png" alt="RIT">
+<!--  <img class=img src="assets/Images/RIT_rgb_hor_k.png" alt="RIT">-->
 </body>
