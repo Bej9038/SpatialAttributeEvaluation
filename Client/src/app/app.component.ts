@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {StringStoreService} from "./Services/string-store.service";
 import {WelcomeMenu} from "./Components/welcome-menu/welcome-menu.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -11,6 +11,8 @@ import {AudioService} from "./Services/audio.service";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  // @ts-ignore
+  @ViewChild('slidergrid') slidergrid: ElementRef<HTMLDivElement>;
   userName:string;
 
   constructor(public audio: AudioService, private dialog: MatDialog, public stringStore: StringStoreService, public sessionValues: SessionValuesService)
@@ -30,6 +32,11 @@ export class AppComponent {
       });
   }
 
+  ngOnViewInit()
+  {
+    this.onResize();
+  }
+
   volSlider(event:any)
   {
     this.audio.setVolume(event.value/100);
@@ -39,6 +46,20 @@ export class AppComponent {
   playButton()
   {
     this.audio.dest.isPlaying? this.audio.pause() : this.audio.play()
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    // if(window.innerWidth < 1100)
+    // {
+    //   // @ts-ignore
+    //   this.slidergrid.nativeElement.style.setProperty('grid-template-columns', 'repeat(1, 1fr)');
+    // }
+    // else
+    // {
+    //   // @ts-ignore
+    //   this.slidergrid.nativeElement.style.setProperty('grid-template-columns', 'repeat(2, 1fr)');
+    // }
   }
 }
 

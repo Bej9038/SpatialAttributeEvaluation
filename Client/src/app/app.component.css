@@ -2,23 +2,6 @@
   padding: 7% !important;
 }
 
-.next-button{
-  position: relative;
-  display: block;
-  width: 38%;
-  height: 10%;
-  top: 36%;
-  margin-left: auto;
-  margin-right: auto;
-  right: 0;
-  left: 0;
-  background-color: var(--accent1);
-  color: var(--text3);
-  outline: none;
-  border: none;
-  transition: all .3s ease-in-out;
-}
-
 .mat-list {
   width: 80%;
 }
@@ -89,17 +72,35 @@
 
 .slidergrid-card {
   width: 100%;
-  height: 60%;
-  margin: 24%;
+  height: 70%;
+  margin: 20%;
+  contain: paint;
 }
 
 .slidergrid {
   position: relative;
-  top: 10%;
+  width: 100%;
+  height: 88%;
+  top: 6%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 3rem;
-  row-gap: 3rem;
+  transition: all .3s ease-in-out;
+}
+
+.next-button{
+  position: relative;
+  display: block;
+  width: 40%;
+  height: 12%;
+  bottom: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  background-color: var(--accent1);
+  color: var(--text3);
+  outline: none;
+  border: none;
   transition: all .3s ease-in-out;
 }
 
