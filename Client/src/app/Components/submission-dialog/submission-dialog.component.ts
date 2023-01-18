@@ -3,7 +3,6 @@ import {AudioService} from "../../Services/audio.service";
 import {StringStoreService} from "../../Services/string-store.service";
 import {SessionValuesService} from "../../Services/session-values.service";
 import {MatDialogRef} from "@angular/material/dialog";
-import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'submission-dialog',

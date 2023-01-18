@@ -10,7 +10,7 @@
 
 .button {
   padding: 0 40px 0 !important;
-  background-color: var(--primary1);
+  background-color: var(--background2);
   color: var(--text3);
   transition: all .3s ease-in-out;
 }

@@ -104,14 +104,19 @@ export class SessionValuesService {
     let textlight = getComputedStyle(document.querySelector(':root')).getPropertyValue('--primary4');
 
     // @ts-ignore
-    let bgdark = getComputedStyle(document.querySelector(':root')).getPropertyValue('--dark1');
+    let bgdark1 = getComputedStyle(document.querySelector(':root')).getPropertyValue('--dark1');
+
+    // @ts-ignore
+    let bgdark2 = getComputedStyle(document.querySelector(':root')).getPropertyValue('--dark2');
 
     if(this.isDarkMode)
     {
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--background', bglight);
+      document.querySelector(':root').style.setProperty('--background1', bglight);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text1', bgdark);
+      document.querySelector(':root').style.setProperty('--background2', bglight);
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--text1', bgdark1);
       // @ts-ignore
       document.querySelector(':root').style.setProperty('--text2', textlight);
       // @ts-ignore
@@ -120,11 +125,13 @@ export class SessionValuesService {
     }
     else {
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--background', bgdark);
+      document.querySelector(':root').style.setProperty('--background1', bgdark1);
+      // @ts-ignore
+      document.querySelector(':root').style.setProperty('--background2', bgdark2);
       // @ts-ignore
       document.querySelector(':root').style.setProperty('--text1', bglight);
       // @ts-ignore
-      document.querySelector(':root').style.setProperty('--text2', bgdark);
+      document.querySelector(':root').style.setProperty('--text2', bgdark1);
       // @ts-ignore
       document.querySelector(':root').style.setProperty('--text3', bglight);
 

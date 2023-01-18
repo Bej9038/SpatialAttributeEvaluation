@@ -14,45 +14,42 @@
       </mat-grid-tile>
 
       <!-- slider block -->
-      <mat-grid-tile colspan="4" rowspan="6">
-        <mat-card class="slidergrid">
+      <mat-grid-tile colspan="4" rowspan="8">
+        <mat-card class="slidergrid-card">
+          <div class="slidergrid">
+            <mat-list>
+              <mat-list-item>
+                <attribute-slider attributeName="Immersion"
+                                  matTooltip="{{stringStore.immersionAttributeDescription}}"
+                                  matTooltipPosition="right"
+                ></attribute-slider>
+              </mat-list-item>
 
-          <mat-list>
-            <mat-list-item>
-              <attribute-slider attributeName="Immersion"
-                                matTooltip="{{stringStore.immersionAttributeDescription}}"
-                                matTooltipPosition="right"
-                                ></attribute-slider>
-            </mat-list-item>
+              <mat-list-item>
+                <attribute-slider attributeName="Clarity"
+                                  matTooltip="{{stringStore.clarityAttributeDescription}}"
+                                  matTooltipPosition="right"></attribute-slider>
+              </mat-list-item>
+            </mat-list>
 
-            <mat-list-item>
-              <attribute-slider attributeName="Clarity"
-                                matTooltip="{{stringStore.clarityAttributeDescription}}"
-                                matTooltipPosition="right"></attribute-slider>
-            </mat-list-item>
-          </mat-list>
+            <mat-list>
+              <mat-list-item>
+                <attribute-slider attributeName="Width"
+                                  matTooltip="{{stringStore.widthAttributeDescription}}"
+                                  matTooltipPosition="right"></attribute-slider>
+              </mat-list-item>
 
-          <mat-list>
-          <mat-list-item>
-            <attribute-slider attributeName="Width"
-                              matTooltip="{{stringStore.widthAttributeDescription}}"
-                              matTooltipPosition="right"></attribute-slider>
-          </mat-list-item>
+              <mat-list-item>
+                <attribute-slider attributeName="Depth"
+                                  matTooltip="{{stringStore.depthAttributeDescription}}"
+                                  matTooltipPosition="right"></attribute-slider>
+              </mat-list-item>
+            </mat-list>
+          </div>
 
-          <mat-list-item>
-            <attribute-slider attributeName="Depth"
-                                matTooltip="{{stringStore.depthAttributeDescription}}"
-                                matTooltipPosition="right"></attribute-slider>
-            </mat-list-item>
-          </mat-list>
-
+          <button class="next-button" mat-stroked-button (click)="sessionValues.nextSong()">Next Song</button>
 
         </mat-card>
-      </mat-grid-tile>
-
-
-      <mat-grid-tile colspan="4" rowspan="2">
-        <button class="next-button" mat-stroked-button (click)="sessionValues.nextSong()">Next Song</button>
       </mat-grid-tile>
 
     </mat-grid-list>

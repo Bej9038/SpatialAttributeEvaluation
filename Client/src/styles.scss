@@ -2,11 +2,16 @@
 
 :root {
   --primary1: #3F51B5;
+  --primary4: rgba(197, 202, 233, 0.7);
+
+
   --primary2: #7986CB;
   --primary3: #283593;
-  --primary4: #C5CAE9;
-  --accent1: #00BFA5;
-  --accent2: #B2DFDB;
+
+  --accent1: #3F51B5;
+  --accent2: rgba(197, 202, 233, 1);
+  //--accent1: #EF5350;
+  //--accent2: #FFCDD2;
   --warn: #B00020;
 
   --text1: #212121;
@@ -15,10 +20,10 @@
 
   --light: #FFFFFF;
   --dark1: #2b2b2b;
-  --dark2: #424242;
-  --dark3: #363636;
+  --dark2: #343434;
 
-  --background: var(--light);
+  --background1: var(--light);
+  --background2: var(--light);
 }
 
 html, body {
@@ -28,12 +33,12 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow: hidden !important;
-  background-color: var(--background);
+  background-color: var(--background1);
   transition: all .3s ease-in-out;
 }
 
 .mat-dialog-container {
-  background-color: var(--background);
+  background-color: var(--background2);
   overflow: hidden !important;
   transition: all .3s ease-in-out;
 }
@@ -59,4 +64,8 @@ body {
   border: none;
   outline: none;
 }
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: var(--accent1);
+}
+
 

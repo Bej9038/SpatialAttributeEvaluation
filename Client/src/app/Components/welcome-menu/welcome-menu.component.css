@@ -26,10 +26,30 @@
   height: 24%;
 }
 
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: var(--background1);
+  color: var(--background1);
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: var(--primary4)!important;
+}
+
+::ng-deep .mat-input-element {
+     caret-color: var(--accent1)!important;
+}
+
+::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: var(--accent1)!important;
+}
+
+
 .mat-form-field
 {
   text-align: center;
   font-size: 18px;
+  color: var(--text3);
 }
 
 .button {

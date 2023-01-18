@@ -5,8 +5,9 @@
 .next-button{
   position: relative;
   display: block;
-  width: 36%;
-  height: 22%;
+  width: 38%;
+  height: 10%;
+  top: 36%;
   margin-left: auto;
   margin-right: auto;
   right: 0;
@@ -64,7 +65,7 @@
 }
 
 .mat-card{
-  background-color: var(--background);
+  background-color: var(--background2);
   transition: all .3s ease-in-out;
 }
 
@@ -81,17 +82,20 @@
 }
 
 .grid-container {
-  background-color: var(--background);
+  background-color: var(--background1);
   transition: all .3s ease-in-out;
   height: 90%;
 }
 
-.slidergrid {
+.slidergrid-card {
   width: 100%;
-  height: 70%;
-  margin: 26px;
-  top: 10%;
+  height: 60%;
+  margin: 24%;
+}
 
+.slidergrid {
+  position: relative;
+  top: 10%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 3rem;

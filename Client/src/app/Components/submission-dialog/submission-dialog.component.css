@@ -8,3 +8,7 @@
   left: 0;
   top: 20%;
 }
+
+.mat-card-subtitle{
+  color: var(--text3);
+}
