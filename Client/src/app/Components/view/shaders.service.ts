@@ -18,7 +18,7 @@ export class ShadersService {
   void main()
   {
     float test = dot(vColor, vec3(0.0, - 1.0, 0.0));
-    gl_FragColor = vec4(vColor, 1.0);
+    gl_FragColor = vec4(vColor, 0.75);
 
     #include <fog_fragment>
   }
@@ -91,9 +91,11 @@ export class ShadersService {
     float lightIntensityB = max(0.0, - dot(normal, normalize(uLightPositionB)));
 
     //vec3 color = vec3(uAverageFrequency/50.0);
-    vec3 color = vec3(0.0);
-    color = mix(color, uLightColorA, lightIntensityA);
-    color = mix(color, uLightColorA, lightIntensityB);
+    vec3 color = uLightColorA;
+    //vec3 color = vec3(0.0);
+
+    //color = mix(color, uLightColorA, lightIntensityA);
+    //color = mix(color, uLightColorA, lightIntensityB);
 
     vNormal = normal;
     vPerlinStrength = displacedPosition.a;

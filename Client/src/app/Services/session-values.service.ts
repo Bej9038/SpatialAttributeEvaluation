@@ -14,6 +14,10 @@ const NUM_ROUNDS = 10;
 export class SessionValuesService {
   private sliderResetSource: BehaviorSubject<boolean>;
   sliderReset:Observable<boolean>;
+  private sliderPauseSource:BehaviorSubject<boolean>;
+  sliderPause:Observable<boolean>;
+  private sliderPlaySource: BehaviorSubject<boolean>;
+  sliderPlay:Observable<boolean>;
   private claritySource:BehaviorSubject<number>;
   clarity:Observable<number>;
   private widthSource:BehaviorSubject<number>;
@@ -36,6 +40,12 @@ export class SessionValuesService {
 
     this.sliderResetSource = new BehaviorSubject<boolean>(false);
     this.sliderReset = this.sliderResetSource.asObservable();
+
+    this.sliderPauseSource = new BehaviorSubject<boolean>(false);
+    this.sliderPause = this.sliderPauseSource.asObservable();
+
+    this.sliderPlaySource = new BehaviorSubject<boolean>(false);
+    this.sliderPlay = this.sliderPlaySource.asObservable();
 
     this.claritySource = new BehaviorSubject<number>(0.0);
     this.clarity = this.claritySource.asObservable();
@@ -78,6 +88,18 @@ export class SessionValuesService {
     this.usernameSource.next(username);
   }
 
+  pauseAnimation()
+  {
+    this.sliderPauseSource.next(true);
+    this.sliderPauseSource.next(false);
+  }
+
+  resumeAnimation()
+  {
+    this.sliderPlaySource.next(true);
+    this.sliderPlaySource.next(false);
+  }
+
   nextSong()
   {
     if(this.currRound/this.numRounds == 100)
@@ -88,6 +110,7 @@ export class SessionValuesService {
     {
       this.audio.stop();
     }
+
     this.sliderResetSource.next(true);
     this.sliderResetSource.next(false);
     setTimeout(()=>{

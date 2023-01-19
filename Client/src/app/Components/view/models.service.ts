@@ -154,6 +154,7 @@ export class ModelsService {
       lights:true,
       fog:true,
       uniforms: uniforms,
+      transparent: true,
       defines: {
         USE_TANGENT: ''
       },
@@ -190,7 +191,7 @@ export class ModelsService {
     this.immersionMaterial = new THREE.PointsMaterial(
       {
         size: 0.05,
-        opacity: 0.75,
+        opacity: 0.6,
         transparent: true,
         color: new THREE.Color(
           Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent1').slice(2, 8))

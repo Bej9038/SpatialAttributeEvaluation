@@ -19,10 +19,24 @@ export class AttributeSlider {
   }
 
   ngAfterViewInit(){
-    this.sessionValues.sliderReset.subscribe(sliderReset => {
-      if(sliderReset)
+    this.sessionValues.sliderReset.subscribe(reset => {
+      if(reset)
       {
         this.reset(this.value, 1, 20);
+      }
+    });
+
+    this.sessionValues.sliderPause.subscribe(pause=> {
+      if(pause)
+      {
+        this.pauseValue(this.value, 1, 20);
+      }
+    });
+
+    this.sessionValues.sliderPlay.subscribe(play => {
+      if(play)
+      {
+        this.playValue(0, 1, 20);
       }
     });
   }
@@ -31,8 +45,8 @@ export class AttributeSlider {
   {
     if(val > 0)
     {
-      this.emitValue(val);
       val -= decRate;
+      this.emitValue(val);
       this.value -= decRate;
       setTimeout(()=>{
         this.reset(val, decTime, decRate);
@@ -42,8 +56,39 @@ export class AttributeSlider {
       this.emitValue(0);
       this.value = 0;
     }
-
   }
+
+  pauseValue(val:number, decTime:number, decRate:number)
+  {
+    if(val > 0)
+    {
+      val -= decRate;
+      this.emitValue(val);
+      setTimeout(()=>{
+        this.pauseValue(val, decTime, decRate);
+      }, decTime);
+    }
+    else{
+      this.emitValue(0);
+    }
+  }
+
+  playValue(val:number, decTime:number, decRate:number)
+  {
+    if(val < this.value)
+    {
+      val += decRate;
+      this.emitValue(val);
+      setTimeout(()=>{
+        this.playValue(val, decTime, decRate);
+      }, decTime);
+    }
+    else{
+      this.emitValue(this.value);
+    }
+  }
+
+
 
   emitValue(value:number, event?:any)
   {

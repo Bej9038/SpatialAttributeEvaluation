@@ -45,7 +45,16 @@ export class AppComponent {
   @HostListener('window:keyup.space', ['$event'])
   playButton()
   {
-    this.audio.dest.isPlaying? this.audio.pause() : this.audio.play()
+    if(this.audio.dest.isPlaying)
+    {
+      this.audio.pause();
+      this.sessionValues.pauseAnimation();
+    }
+    else
+    {
+      this.audio.play();
+      this.sessionValues.resumeAnimation();
+    }
   }
 
   @HostListener('window:resize', ['$event'])
