@@ -9,7 +9,7 @@
       <mat-grid-tile colspan="6" rowspan="8">
 <!--        <view style="width: 100%; height: 100%"></view>-->
         <view></view>
-        <button class="playbtn" mat-fab (click)="playButton()"><mat-icon>play_circle_outline</mat-icon></button>
+        <button #playbtn class="playbtn" mat-fab (click)="playButton()"><mat-icon>play_circle_outline</mat-icon></button>
         <mat-slider class="volumesldr" value="{{this.audio.defaultVolume * 100}}" min="0" max="100" (input)="this.volSlider($event)"></mat-slider>
       </mat-grid-tile>
 

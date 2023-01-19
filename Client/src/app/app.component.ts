@@ -14,6 +14,7 @@ export class AppComponent {
   // @ts-ignore
   @ViewChild('slidergrid') slidergrid: ElementRef<HTMLDivElement>;
   userName:string;
+  playButtonTempDisable = false;
 
   constructor(public audio: AudioService, private dialog: MatDialog, public stringStore: StringStoreService, public sessionValues: SessionValuesService)
   {
@@ -45,15 +46,22 @@ export class AppComponent {
   @HostListener('window:keyup.space', ['$event'])
   playButton()
   {
-    if(this.audio.dest.isPlaying)
+    if(!this.playButtonTempDisable)
     {
-      this.audio.pause();
-      this.sessionValues.pauseAnimation();
-    }
-    else
-    {
-      this.audio.play();
-      this.sessionValues.resumeAnimation();
+      if(this.audio.dest.isPlaying)
+      {
+        this.audio.pause();
+        this.sessionValues.pauseAnimation();
+      }
+      else
+      {
+        this.audio.play();
+        this.sessionValues.resumeAnimation();
+      }
+      this.playButtonTempDisable = true;
+      setTimeout(()=>{
+        this.playButtonTempDisable = false;
+      }, 850);
     }
   }
 
