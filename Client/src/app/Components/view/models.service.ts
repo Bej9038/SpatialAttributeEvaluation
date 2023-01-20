@@ -90,12 +90,12 @@ export class ModelsService {
   initRoomMaterial()
   {
     this.planeMaterial = new Array<THREE.MeshBasicMaterial>();
-    this.planeMaterial[0] = new THREE.MeshBasicMaterial({
+    this.planeMaterial[0] = new THREE.MeshPhongMaterial({
         color: 0x726B6B,
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
       });
 
-    this.planeMaterial[1] = new THREE.MeshBasicMaterial({
+    this.planeMaterial[1] = new THREE.MeshPhongMaterial({
       color: 0xD4CBCB,
       side: THREE.DoubleSide
     });

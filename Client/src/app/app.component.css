@@ -17,6 +17,10 @@
   bottom: 7%;
   transition: all .3s ease-in-out;
 }
+
+.view-container {
+}
+
 .playbtn
 {
   position: absolute;
@@ -98,7 +102,7 @@
   right: 0;
   left: 0;
   background-color: var(--accent1);
-  color: var(--text3);
+  color: var(--primary4);
   outline: none;
   border: none;
   transition: all .3s ease-in-out;

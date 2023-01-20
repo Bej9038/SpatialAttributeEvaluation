@@ -12,7 +12,7 @@ import {ModelsService} from "./models.service";
 
 @Component({
   selector: 'view',
-  template: '<canvas width="100" style="display: block;" #view></canvas>'
+  template: '<canvas style="display: block; width: 100%; position: relative" #view></canvas>'
 })
 export class ViewComponent {
   // @ts-ignore
@@ -84,6 +84,12 @@ export class ViewComponent {
 
       this.models.generateSphere();
       this.scene.add(this.models.getSphereObject());
+
+      let light = new THREE.PointLight( new THREE.Color(
+        Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent2').slice(2, 8)))
+        , 5.0, 12.0, 1.0);
+      light.position.set( 0, 6, -2 );
+      this.scene.add( light );
 
       this.initOrbitControls();
 
