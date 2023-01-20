@@ -151,7 +151,7 @@ export class ViewComponent {
   {
     this.audio.updateAnalyzerData();
 
-    let scaler = this.sphereImmersion/2 + 3.5;
+    let scaler = this.sphereImmersion/1.3 + 3.25;
     this.models.getImmersionObject().scale.set(scaler, scaler, scaler);
 
     this.models.getImmersionObject().geometry.setAttribute('position',

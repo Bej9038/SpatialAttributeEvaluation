@@ -27,7 +27,7 @@ export class ModelsService {
   immersionObject: THREE.Points;
   // @ts-ignore
   immersionPositionArr: Float32Array;
-  numImmersionParticles:number = 10000;
+  numImmersionParticles:number = 15000;
 
   // @ts-ignore
   planeGeometry: Array<THREE.PlaneGeometry>;
