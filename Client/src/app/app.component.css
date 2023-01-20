@@ -102,7 +102,7 @@
   right: 0;
   left: 0;
   background-color: var(--accent1);
-  color: var(--primary4);
+  color: var(--light);
   outline: none;
   border: none;
   transition: all .3s ease-in-out;
