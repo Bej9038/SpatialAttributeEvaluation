@@ -5,27 +5,36 @@ import * as THREE from "three";
   providedIn: 'root'
 })
 export class AudioService {
+  // @ts-ignore
   listener:THREE.AudioListener;
+  // @ts-ignore
   dest:THREE.Audio;
+  // @ts-ignore
   defaultVolume:number;
+  // @ts-ignore
   currentSliderVolume:number;
+  // @ts-ignore
   time: THREE.Clock;
+  // @ts-ignore
   analyser: THREE.AudioAnalyser;
-  isPlaying: boolean;
+  isPlaying: boolean = false;
+  // @ts-ignore
   frequencyData: Uint8Array;
+  // @ts-ignore
   waveformData: Float32Array;
-  analyzerLevel:number;
+  analyzerLevel:number = 0;
+  // @ts-ignore
   freqLevels:Array<number>;
 
-  constructor()
+  initAudioService()
   {
     this.listener = new THREE.AudioListener();
     this.dest = new THREE.Audio(this.listener);
+    this.loadAudio("../assets/Audio/jazz.mp3");
+    this.dest.autoplay = true;
     this.defaultVolume = 0.5;
-    this.currentSliderVolume = this.defaultVolume;
     this.time = new THREE.Clock();
-    this.isPlaying = false;
-
+    this.currentSliderVolume = this.defaultVolume;
     this.analyser = new THREE.AudioAnalyser(this.dest, 2048);
     this.frequencyData = new Uint8Array(this.analyser.analyser.fftSize/2);
     this.analyser.analyser.getByteFrequencyData(this.frequencyData);
@@ -113,10 +122,13 @@ export class AudioService {
 
   updateAnalyzerData()
   {
-    this.analyser.analyser.getByteFrequencyData(this.frequencyData);
-    this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
-    this.updateAnalyzerLevel();
-    this.updateFreqLevels();
+    if(this.dest)
+    {
+      this.analyser.analyser.getByteFrequencyData(this.frequencyData);
+      this.analyser.analyser.getFloatTimeDomainData(this.waveformData);
+      this.updateAnalyzerLevel();
+      this.updateFreqLevels();
+    }
   }
 
   updateAnalyzerLevel()

@@ -41,13 +41,13 @@ export class WelcomeMenu {
     {
       this.updateUsername();
       this.showDirections = true;
-      this.audio.loadAudio("../assets/Audio/jazz.mp3");
     }
   }
 
   closeDialog()
   {
+    this.audio.initAudioService();
+    console.log("close");
     this.dialogRef.close();
-    this.audio.play();
   }
 }

@@ -158,7 +158,7 @@ export class ViewComponent {
     this.models.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
     this.models.sphereMaterial.uniforms['uWidth'].value = this.sphereWidth;
     this.models.sphereMaterial.uniforms['uDepth'].value = this.sphereDepth;
-    this.models.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
+    //this.models.sphereMaterial.uniforms['uAverageFrequency'].value = this.audio.analyser.getAverageFrequency();
 
     let t = this.time.getElapsedTime() * 25;
     this.models.offsetSphr.phi = ((Math.sin(t * 0.0056) * Math.sin(t * 0.0048)) * 0.5 + 0.5) * Math.PI;
