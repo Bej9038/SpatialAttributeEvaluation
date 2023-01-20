@@ -151,14 +151,12 @@ export class ViewComponent {
   {
     this.audio.updateAnalyzerData();
 
-    let scaler = this.sphereImmersion/1.3 + 3.25;
+    let scaler = this.sphereImmersion/1.35 + 3.25 + this.sphereClarity/4 + this.audio.analyzerLevel/2;
     this.models.getImmersionObject().scale.set(scaler, scaler, scaler);
+    this.models.getImmersionObject().scale.add(new THREE.Vector3(this.sphereWidth/6,0, this.sphereDepth/6));
 
     this.models.getImmersionObject().geometry.setAttribute('position',
       new THREE.BufferAttribute(this.models.immersionPositionArr.slice(0, this.sphereImmersion * 100 * 3), 3));
-
-    this.models.getImmersionObject().rotateY(0.0002);
-    this.models.getImmersionObject().rotateX(0.00015);
 
     this.models.sphereMaterial.uniforms['uTime'].value = this.time.getElapsedTime() * 0.8;
     this.models.sphereMaterial.uniforms['uDisplacementStrength'].value = this.sphereClarity + this.audio.analyzerLevel;
