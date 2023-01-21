@@ -9,7 +9,7 @@ export class ModelsService {
 
   offsetSphr: THREE.Spherical;
   offsetDir: THREE.Vector3;
-  sphereSubdivs: number = 1024;
+  sphereSubdivs: number = 1000;
   sphereRad: number = 1.25;
 
   // @ts-ignore
@@ -27,7 +27,7 @@ export class ModelsService {
   immersionObject: THREE.Points;
   // @ts-ignore
   immersionPositionArr: Float32Array;
-  numImmersionParticles:number = 15000;
+  numImmersionParticles:number = 1000;
 
   // @ts-ignore
   planeGeometry: Array<THREE.PlaneGeometry>;
