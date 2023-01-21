@@ -30,7 +30,8 @@ export class AudioService {
   {
     this.listener = new THREE.AudioListener();
     this.dest = new THREE.Audio(this.listener);
-    this.loadAudio("/SpatialAttributeEvaluation/assets/Audio/jazz.mp3");
+    // this.loadAudio("/SpatialAttributeEvaluation/assets/Audio/jazz.mp3");
+    this.loadAudio("/assets/Audio/jazz.mp3");
     this.dest.autoplay = true;
     this.defaultVolume = 0.5;
     this.time = new THREE.Clock();

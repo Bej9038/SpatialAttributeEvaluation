@@ -85,11 +85,19 @@ export class ViewComponent {
       this.models.generateSphere();
       this.scene.add(this.models.getSphereObject());
 
-      let light = new THREE.PointLight( new THREE.Color(
+      let light1 = new THREE.PointLight( new THREE.Color(
         Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent2').slice(2, 8)))
-        , 5.0, 12.0, 1.0);
-      light.position.set( 0, 6, -2 );
-      this.scene.add( light );
+        , 4.0, 14.0, 1.0);
+      light1.position.set( 0, 7, 0 );
+
+      this.scene.add( light1 );
+
+      // let light2 = new THREE.PointLight( new THREE.Color(
+      //     Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent2').slice(2, 8)))
+      //   , 6.0, 6.0, 1.0);
+      // light2.position.set( 0, 7, 0 );
+      //
+      // this.scene.add( light2 );
 
       this.initOrbitControls();
 
