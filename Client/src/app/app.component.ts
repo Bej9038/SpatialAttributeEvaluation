@@ -35,7 +35,7 @@ export class AppComponent {
 
   ngOnViewInit()
   {
-    this.onResize();
+    //this.onResize();
   }
 
   volSlider(event:any)

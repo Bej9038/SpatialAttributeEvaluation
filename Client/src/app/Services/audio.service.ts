@@ -17,7 +17,7 @@ export class AudioService {
   time: THREE.Clock;
   // @ts-ignore
   analyser: THREE.AudioAnalyser;
-  isPlaying: boolean = false;
+  isPlaying: boolean = true;
   // @ts-ignore
   frequencyData: Uint8Array;
   // @ts-ignore

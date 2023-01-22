@@ -47,7 +47,7 @@ export class WelcomeMenu {
   closeDialog()
   {
     this.audio.initAudioService();
-    console.log("close");
+    //console.log("close");
     this.dialogRef.close();
   }
 }
