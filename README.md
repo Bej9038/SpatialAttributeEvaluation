@@ -4,7 +4,7 @@
 - This project was created to assist professor Sungyoung Kim with his research relating to spatial audio. 
 This web-based program will be used to collect data on how users feel about aspects of audio such as clarity and 
 immersiveness.
-- I created this project part-time throughout the Fall '22 semester.
+- I created this project part-time throughout the fall '22 semester.
 
 ## Specifications
 ![SA1.png](..%2FSA1.png)
