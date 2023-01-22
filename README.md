@@ -23,6 +23,6 @@ such as three.js or using shader languages like GLSL and I had a lot of fun!
 
 ## ToDo
 - The project is currently a prototype and I may make further changes depending on feedback from my professor. At the 
-moment there is only one demo song and the program is just a client not connected to any backend.
-- The next steps for this project include hosting the project on a webserver, setting up a database, and then
+moment there is only one demo song and the program is just a client.
+- The next steps for this project include hosting the project on a webserver, setting up a backend + database, and then
 beginning data collection + research.
