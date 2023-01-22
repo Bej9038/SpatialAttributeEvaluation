@@ -12,7 +12,7 @@ immersiveness.
 ![SA3.png](..%2FSA3.png)
 ![Exp7.Spatial_HOLST.png](..%2FExp7.Spatial_HOLST.png)
 - The above images were the specifications for the project given to me. I was given full control over how to 
-design and implement this and ended deciding on angular and typescrip. I think
+design and implement this and ended deciding on angular and typescript. I think
 Angular is great and took this opportunity to practice developing with it. I also really like Angular's material components
 library and used that extensively for the UI.
 - I also chose to use three.js for the 3D interface. It was difficult to find any example projects using three.js and 
