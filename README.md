@@ -10,7 +10,7 @@ immersiveness.
 ![SA1.png](..%2FSA1.png)
 ![SA2.png](..%2FSA2.png)
 ![SA3.png](..%2FSA3.png)
-
+![Exp7.Spatial_HOLST.png](..%2FExp7.Spatial_HOLST.png)
 - These were the specifications for the project given to and described to me. I was given full control over how to 
 design and implement this and ended deciding on angular and typescript to keep development organized.
 - I also chose to use three.js for the 3D graphics. It was difficult to find any example projects combining three.js and 
