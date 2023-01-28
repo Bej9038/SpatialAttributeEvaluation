@@ -148,7 +148,7 @@ export class ViewComponent {
     this.controls.minAzimuthAngle = 0;
     this.controls.maxPolarAngle = Math.PI/2;
 
-    this.camera.position.set(3, 1.5, 5);
+    this.camera.position.set(3, 1.5, 6);
     this.camera.rotateY(Math.PI/6.25);
     this.camera.rotateX(-Math.PI/11);
 

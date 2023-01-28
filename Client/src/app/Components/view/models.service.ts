@@ -10,7 +10,7 @@ export class ModelsService {
   offsetSphr: THREE.Spherical;
   offsetDir: THREE.Vector3;
   sphereSubdivs: number = 1000;
-  sphereRad: number = 1.25;
+  sphereRad: number = 1.56;
 
   // @ts-ignore
   sphereGeometry: THREE.SphereGeometry;
@@ -41,7 +41,7 @@ export class ModelsService {
 
   constructor(private shaderStore: ShadersService) {
     this.immersionPositionArr = new Float32Array(this.numImmersionParticles * 3);
-    this.offsetSphr = new THREE.Spherical(1, Math.random() * Math.PI, Math.random() * Math.PI * 2);
+    this.offsetSphr = new THREE.Spherical(this.sphereRad, Math.random() * Math.PI, Math.random() * Math.PI * 2);
     this.offsetDir = new THREE.Vector3();
     this.offsetDir.setFromSpherical(this.offsetSphr);
   }
