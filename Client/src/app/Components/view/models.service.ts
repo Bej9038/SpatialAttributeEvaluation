@@ -121,7 +121,7 @@ export class ModelsService {
 
   initSphereMaterial()
   {
-    let uSphereColor:string = getComputedStyle(document.body).getPropertyValue('--accent1').slice(2,8);
+    let uSphereColor:string = getComputedStyle(document.body).getPropertyValue('--accent1').slice(1,8);
     let rValue = Number("0x" + uSphereColor.slice(0, 2));
     let gValue = Number("0x" + uSphereColor.slice(2, 4));
     let bValue = Number("0x" + uSphereColor.slice(4, 6));
