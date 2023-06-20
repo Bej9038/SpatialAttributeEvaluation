@@ -194,7 +194,7 @@ export class ModelsService {
         opacity: 0.6,
         transparent: true,
         color: new THREE.Color(
-          Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent1').slice(2, 8))
+          Number("0x" + getComputedStyle(document.body).getPropertyValue('--accent1').slice(1, 8))
         )
       }
     );
